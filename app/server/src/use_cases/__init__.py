@@ -1,0 +1,1 @@
+from .ingest_openpowerlifting import IngestOpenPowerlifting
