@@ -38,10 +38,13 @@ class BuildRecords:
             {
                 "$group": {
                     "_id": {
+                        "federation_slug": { "$toLower": "$competition.federation" },
                         "sex": "$athlete.sex",
                         "equipment": "$category.equipment",
-                        "weight_class": "$category.weight_class"
+                        "weight_class": "$category.weight_class",
+                        "age_class": "$category.age_class"
                     },
+                    "federation_name": { "$first": "$competition.federation" },
                     "val": { "$first": f"${target_field}" },
                     "holder": { "$first": "$athlete.name" },
                     "slug": { "$first": "$athlete.id" },
@@ -52,6 +55,7 @@ class BuildRecords:
             {
                 "$project": {
                     "_id": 1,
+                    "federation": "$federation_name",
                     output_field: {
                         "value": "$val",
                         "holder_name": "$holder",

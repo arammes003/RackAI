@@ -25,10 +25,12 @@ class RecordEntry:
 @dataclass
 class Record:
 
+    federation_slug: str
+    federation: str
     sex: str     
     equipment: str   
     weight_class: str   
-
+    age_class: str
 
     squat: Optional[RecordEntry] = None
     bench: Optional[RecordEntry] = None
@@ -43,9 +45,12 @@ class Record:
         key_info = data.get("_id", {})
         
         return cls(
+            federation_slug=key_info.get("federation_slug", "Unknown"),
+            federation=key_info.get("federation", "Unknown"),
             sex=key_info.get("sex", "Unknown"),
             equipment=key_info.get("equipment", "Unknown"),
             weight_class=key_info.get("weight_class", "Unknown"),
+            age_class=key_info.get("age_class", "Unknown"),
 
             squat=RecordEntry.from_dict(data.get("squat")),
             bench=RecordEntry.from_dict(data.get("bench")),
