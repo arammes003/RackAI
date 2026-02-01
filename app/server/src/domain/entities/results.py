@@ -31,6 +31,7 @@ class CompetitionResult:
     # Category
     division: str
     age_class: str
+    weight_class: str
     equipment: str
     event_type: str
     tested: bool
@@ -72,6 +73,7 @@ class CompetitionResult:
             "category": {
                 "division": self.division,
                 "age_class": self.age_class,
+                "weight_class": self.weight_class,
                 "equipment": self.equipment,
                 "event": self.event_type,
                 "tested": self.tested

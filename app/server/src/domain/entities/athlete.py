@@ -25,6 +25,7 @@ class Athlete:
     bodyweight: Optional[float]
     division: Optional[str]
     division_age: Optional[str]
+    weight_class: Optional[str]
     
     stats: AthleteStats
     competitions: List[str]
@@ -49,6 +50,7 @@ class Athlete:
             bodyweight=data.get("bodyweight"),
             division=data.get("division"),
             division_age=data.get("division_age"),
+            weight_class=data.get("weight_class"),
             
             stats=AthleteStats(
                 total_competitions=stats_data.get("total_competitions", 0),

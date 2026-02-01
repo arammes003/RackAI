@@ -24,6 +24,7 @@ class BuildAthleteProfiles:
                     "bodyweight": { "$last": "$athlete.bodyweight" },
                     "division": { "$last": "$category.division" },
                     "division_age": { "$last": "$category.age_class" },
+                    "weight_class": { "$last": "$category.weight_class" },
 
                     "total_competitions": { "$sum": 1 },
                     "best_squat": { "$max": "$results.squat" },
@@ -51,6 +52,7 @@ class BuildAthleteProfiles:
                     "country": 1,
                     "division": 1,
                     "division_age": 1,
+                    "weight_class": 1,
                     "stats": {
                         "total_competitions": "$total_competitions",
                         "best_squat": "$best_squat",

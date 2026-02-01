@@ -95,6 +95,7 @@ class IngestOpenPowerlifting:
             # --- Category ---
             division=str(row.get('Division', '')),
             age_class=str(row.get('AgeClass', '')),
+            weight_class=str(row.get('WeightClassKg', '')),
             equipment=str(row['Equipment']),
             event_type=str(row['Event']),
             tested=is_tested,

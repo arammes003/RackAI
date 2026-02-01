@@ -5,3 +5,5 @@ from .build_athlete_profiles import BuildAthleteProfiles
 from .build_federations_profiles import BuildFederations
 
 from .build_competitions_profiles import BuildCompetitions
+
+from .build_records_profiles import BuildRecords
