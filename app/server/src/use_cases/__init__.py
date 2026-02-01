@@ -2,5 +2,6 @@ from .ingest_openpowerlifting import IngestOpenPowerlifting
 
 from .build_athlete_profiles import BuildAthleteProfiles
 
-from .build_federations import BuildFederations
+from .build_federations_profiles import BuildFederations
 
+from .build_competitions_profiles import BuildCompetitions
