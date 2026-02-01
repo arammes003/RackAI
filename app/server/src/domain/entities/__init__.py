@@ -1,1 +1,4 @@
 from .results import CompetitionResult
+from .athlete import Athlete
+
+from .federation import Federation
