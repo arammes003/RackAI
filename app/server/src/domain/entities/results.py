@@ -46,8 +46,8 @@ class CompetitionResult:
     # Points
     dots: Optional[float] = 0.0
     wilks: Optional[float] = 0.0
-    glossbrenner: Optional[float] = 0.0
     goodlift: Optional[float] = 0.0
+    glossbrenner: Optional[float] = 0.0
 
     def to_dict(self):
         """
@@ -58,6 +58,7 @@ class CompetitionResult:
                 "id": self.athlete_slug,
                 "name": self.athlete_name,
                 "sex": self.sex,
+                "birth_year_class": self.birth_year_class,
                 "age": self.age,
                 "country": self.country,
                 "bodyweight": self.bodyweight
@@ -65,6 +66,7 @@ class CompetitionResult:
             "competition": {
                 "id": self.competition_slug,
                 "name": self.meet_name,
+                "state": self.meet_state,
                 "date": self.competition_date,
                 "country": self.meet_country,
                 "town": self.meet_town,
@@ -88,6 +90,7 @@ class CompetitionResult:
             "points": {
                 "dots": self.dots,
                 "wilks": self.wilks,
-                "goodlift": self.goodlift
+                "goodlift": self.goodlift,
+                "glossbrenner": self.glossbrenner
             }
         }

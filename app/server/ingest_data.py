@@ -7,11 +7,12 @@ from src.use_cases import IngestOpenPowerlifting
 
 if __name__ == "__main__":
     # 1. PATH TO CSV
-    CSV_FILE_PATH = "E:/RackAI/data/openpowerlifting-2026-01-24.csv" 
+    # CSV_FILE_PATH = "E:/RackAI/data/openpowerlifting-2026-01-24.csv" 
+    CSV_FILE_PATH = "E:/RackAI/data/openpowerlifting-2026-01-31.csv" 
     
     if not os.path.exists(CSV_FILE_PATH):
         print(f"ERROR: CSV file not found at: {CSV_FILE_PATH}")
-        print("ℹMake sure to download it and set the correct path in ingest_data.py")
+        print("Make sure to download it and set the correct path in ingest_data.py")
         exit()
     print("Starting ETL process...")
     
