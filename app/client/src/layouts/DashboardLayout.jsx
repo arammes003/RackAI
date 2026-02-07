@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Trophy, Users, Dumbbell, Settings, LogOut, ChevronLeft, Menu } from 'lucide-react';
+import { Home, Trophy, Users, Dumbbell, Settings, LogOut, ChevronLeft, Menu, ListOrdered } from 'lucide-react';
 import Header from '../components/Header';
 import logo from '../assets/RackAIv2.png';
 import '../styles/DashboardLayout.css';
@@ -10,6 +10,7 @@ const DashboardLayout = ({ children }) => {
 
   const menuItems = [
     { name: 'Inicio', path: '/', icon: Home },
+    { name: 'Rankings', path: '/rankings', icon: ListOrdered },
     { name: 'Competiciones', path: '/competitions', icon: Trophy },
     { name: 'Clubes', path: '/clubs', icon: Users },
     { name: 'Atletas', path: '/athletes', icon: Dumbbell },

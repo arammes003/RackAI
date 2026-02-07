@@ -1,0 +1,212 @@
+/* Home.css */
+
+.home-container {
+  padding: 1vh 1.5vw 0.5vh 1.5vw;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.home-title {
+  font-weight: 700;
+}
+
+.home-subtitle {
+  color: #6b6b6bad;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+.rankings-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .rankings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Card Styles matching 'Projects' Reference */
+.stat-card {
+  background-color: #ffffff; /* White card as requested */
+  color: #1f2937; /* Dark text */
+  border-radius: 1.5rem; /* rounded-3xl approx */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f3f4f6;
+  overflow: hidden; /* Clip content (charts) to rounded corners */
+  position: relative;
+}
+
+/* Dark Mode override if parent has it, or just manual for now. 
+   User asked for the photo style which was white. 
+   I'll keep it white for now to match "Ended Projects" photo exactly. */
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-title {
+  font-size: 1.125rem; /* lg */
+  font-weight: 600;
+  color: #111827; /* Darker gray */
+}
+
+.icon-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+.icon-button:hover {
+  background-color: #f9fafb;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+.stat-value {
+  font-size: 3.5rem; /* Very big */
+  font-weight: 700;
+  line-height: 1;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.trend-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.trend-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.trend-positive {
+  background-color: #ecfdf5; /* green-50 */
+  color: #059669; /* green-600 */
+}
+
+.trend-negative {
+  background-color: #fef2f2; /* red-50 */
+  color: #dc2626; /* red-600 */
+}
+
+.trend-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Gender styles */
+.gender-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.gender-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.gender-big {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.gender-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Rankings Table */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.ranking-table th {
+  text-align: left;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #9ca3af;
+  font-weight: 600;
+  border-bottom: 1px solid #f3f4f6;
+  white-space: nowrap;
+}
+
+.ranking-table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.ranking-table tr:last-child td {
+  border-bottom: none;
+}
+
+.rank-cell {
+  font-weight: 700;
+  color: #9ca3af;
+  width: 30px;
+}
+
+.name-cell {
+  font-weight: 600;
+  color: #111827;
+}
+
+.sbd-cell {
+  font-family: monospace;
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.points-cell {
+  font-weight: 700;
+  color: #2563eb; /* Blue anchor color */
+}

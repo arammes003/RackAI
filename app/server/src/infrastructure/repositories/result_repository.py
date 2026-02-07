@@ -21,6 +21,41 @@ class ResultRepository:
         self.collection.create_index([("competition.id", ASCENDING)])
         self.collection.create_index([("athlete.name", ASCENDING)])
         self.collection.create_index([("results.total", DESCENDING)])
+
+        """
+           ------ DASHBOARDS ------                
+        """
+
+        # 1. Ranking Global de España (Cuando Federación = ALL)
+        self.collection.create_index([
+            ("athlete.country", ASCENDING),   # Primero filtramos España
+            ("category.tested", ASCENDING),   # Luego si es Tested
+            ("points.goodlift", DESCENDING)   # Finalmente ordenamos por puntos
+        ], name="idx_country_rankings_global")
+
+        # 2. Ranking de España por Federación (Cuando eliges AEP, EPF, etc.)
+        self.collection.create_index([
+            ("athlete.country", ASCENDING),
+            ("competition.federation", ASCENDING), # Aquí añadimos la fed
+            ("category.tested", ASCENDING),
+            ("points.goodlift", DESCENDING)
+        ], name="idx_country_rankings_specific_federation")
+
+        self.collection.create_index([
+            ("competition.federation", ASCENDING),
+            ("category.tested", ASCENDING),
+            ("points.goodlift", DESCENDING)
+        ], name="idx_rankings_goodlift")
+
+
+        # 1. Ranking por País
+        self.collection.create_index([
+            ("athlete.sex", ASCENDING),
+            ("category.equipment", ASCENDING),
+            ("category.tested", ASCENDING),
+            ("results.total", DESCENDING)
+        ], name="idx_country_champions")
+
         print("✅ Índices de Resultados creados en MongoDB")
 
     def get_by_competition(self, competition_slug: str) -> List[CompetitionResult]:
