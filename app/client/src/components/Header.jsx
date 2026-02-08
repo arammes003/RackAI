@@ -1,4 +1,4 @@
-import { Bell, Mail, Search } from 'lucide-react';
+import { Bell, Moon, Search } from 'lucide-react';
 import '../styles/Header.css';
 
 const Header = () => {
@@ -7,10 +7,10 @@ const Header = () => {
       <header className="header">
         <div className="header-left">
           <div className="search-bar">
-            <Search size={22} className="search-icon" />
+            <Search size={20} className="search-icon" />
             <input 
               type="text" 
-              placeholder="Search task" 
+              placeholder="Buscar..." 
               className="search-input"
             />
           </div>
@@ -18,10 +18,10 @@ const Header = () => {
         
         <div className="header-right">
           <button className="icon-button">
-            <Mail size={24} />
+            <Bell size={20} />
           </button>
           <button className="icon-button">
-            <Bell size={24} />
+            <Moon size={20} />
           </button>
           <div className="user-section">
             <div className="user-avatar-container">
@@ -32,8 +32,8 @@ const Header = () => {
               />
             </div>
             <div className="user-info">
-              <span className="user-name">Alfonso Ramirez</span>
-              <span className="user-email">alfonso.ramirez@rackai.com</span>
+              <span className="user-name">Alfonso Ramírez Mestanza</span>
+              <span className="user-email">aramirezmes03@rackai.com</span>
             </div>
           </div>
         </div>

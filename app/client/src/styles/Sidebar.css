@@ -1,0 +1,232 @@
+
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: #111827; /* Dark charcoal background (Tailwind Gray 900) */
+  color: #e5e7eb; /* Light gray text */
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.dashboard-sidebar-collapsed {
+  width: 5rem;
+  height: 100vh;
+  margin-right: 15px;
+  border-radius: 0;
+}
+
+.dashboard-sidebar-expanded {
+  width: 16rem;
+  height: calc(100vh - 1rem);
+  margin: 0.5rem;
+  border-radius: var(--radius-2xl, 1.5rem);
+}
+
+.sidebar-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out logo/title and toggle button */
+  margin-bottom: 0.25rem; /* Reduced margin to match item spacing */
+  height: 6rem; /* Taller header to accommodate larger logo */
+  transition: all 0.3s ease-in-out;
+  padding: 0 1.25rem; /* Add horizontal padding */
+}
+
+.sidebar-header-collapsed {
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.sidebar-header-expanded {
+  padding: 1rem;
+}
+
+.sidebar-toggle-button {
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: var(--radius-md, 0.5rem);
+  color: #9ca3af;
+  transition: color 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 10;
+  border: none;
+  background: none;
+}
+
+.sidebar-toggle-button:hover {
+  background-color: #2d3748;
+  color: white;
+}
+
+.sidebar-title-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 0.75rem; /* Gap between logo and text */
+}
+
+.sidebar-logo {
+  width: 4.5rem; /* Larger logo */
+  height: 4.5rem;
+  object-fit: contain;
+}
+
+.sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+  margin: 0;
+}
+
+.sidebar-nav {
+  flex: 1;
+  width: 100%;
+  padding: 0 0.8rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav-group-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #6b7280; /* Muted gray (Tailwind Gray 500) */
+  letter-spacing: 0.1em;
+  padding: 1.5rem 0.5rem 0.5rem;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+}
+
+.dashboard-sidebar-collapsed .sidebar-nav-group-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  border-radius: 0.5rem; /* Slightly less rounded */
+  transition: all 0.2s;
+  text-decoration: none;
+  position: relative;
+  margin-bottom: 0.25rem;
+  padding-left: 0.5rem; /* Indent icons slightly */
+}
+
+.sidebar-nav-item-active {
+  background-color: #1f2937 !important; /* Dark gray background (Tailwind Gray 800) */
+  color: #fbbf24 !important; /* Amber/Yellow 400 Text */
+}
+
+.sidebar-nav-item-active::before {
+  content: none;
+  display: none;
+}
+
+.sidebar-nav-item-inactive {
+  color: #9ca3af; /* Gray 400 */
+}
+
+.sidebar-nav-item-inactive:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.sidebar-nav-icon-wrapper {
+  width: 2.5rem; /* Smaller wrapper */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.sidebar-nav-label {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+  font-size: 0.95rem;
+  opacity: 1;
+}
+
+.dashboard-sidebar-collapsed .sidebar-nav-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.sidebar-nav-tooltip {
+  position: absolute;
+  left: 4.5rem;
+  background-color: #1a202c;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm, 0.375rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 50;
+  white-space: nowrap;
+}
+
+.sidebar-nav-item:hover .sidebar-nav-tooltip {
+  opacity: 1;
+}
+
+.sidebar-divider {
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  color: #feb2b2;
+  transition: color 0.2s;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sidebar-logout-button:hover {
+  color: #fc8181;
+}
+
+.sidebar-logout-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.sidebar-logout-icon-margin {
+  margin-right: 0.5rem;
+}
+
+/* Dark mode utility for Sidebar */
+.dark .dashboard-sidebar {
+  background-color: #0c1119;
+}
