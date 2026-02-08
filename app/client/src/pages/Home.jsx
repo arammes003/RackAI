@@ -3,6 +3,7 @@ import StatCard from '../components/stats/StatCard';
 import HighlightCard from '../components/stats/HighlightCard';
 import { Users, Trophy } from 'lucide-react';
 import adriImage from '../assets/adri.png';
+import EvolutionChart from '../components/stats/EvolutionChart';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -85,6 +86,8 @@ const Home = () => {
                         category="-83 Open"
                         imageUrl={adriImage}
                     />
+                    
+                    <EvolutionChart />
                 </div>
             </div>
         </div>
