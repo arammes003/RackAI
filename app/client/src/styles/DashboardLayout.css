@@ -25,12 +25,11 @@
 
 .dashboard-main-scroll {
   height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden; /* Prevent scrolling as requested */
 }
 
 .dashboard-main-content {
-  padding: 0 0 2rem 0; /* Removed top padding to move closer to header */
-  min-height: 100%;
+  height: 100%; /* Ensure full height is passed down */
 }
 
 /* Dark mode utility */

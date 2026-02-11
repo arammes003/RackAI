@@ -1,120 +1,208 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
-import '../../styles/Home.css';
-
-const getChartOption = (activeSex, activeAgeCategory) => {
-    // Generate realistic-looking data for weight classes
-    // Men's classes: 53, 59, 66, 74, 83, 93, 105, 120, +120
-    // Women's classes: 43, 47, 52, 57, 63, 69, 76, 84, +84
-    
-    const menClasses = ['-53', '-59', '-66', '-74', '-83', '-93', '-105', '-120', '+120'];
-    const womenClasses = ['-43', '-47', '-52', '-57', '-63', '-69', '-76', '-84', '+84'];
-    
-    const currentClasses = activeSex === 'Masculino' ? menClasses : womenClasses;
-    
-    // Base multipliers for age category
-    const ageMultiplier = activeAgeCategory === 'Subjunior' ? 0.8 : activeAgeCategory === 'Junior' ? 0.92 : 1.0;
-
-    // Helper to generate an increasing trend with random variations around a base max
-    const generateTrend = (baseMax) => {
-        const trend = [];
-        let current = baseMax * 0.7; // Start at 70% of potential max
-        for (let i = 0; i < 16; i++) {
-            current += (Math.random() * 20) - 5; // Mostly increase
-            if (current > baseMax) current = baseMax; // Cap at max
-            trend.push(Math.round(current * ageMultiplier));
-        }
-        return trend;
-    };
-
-    // Define approximate max totals for each weight class (Men/Women logic simplified for mock)
-    // Heavier classes generally lift more
-    const classMaxTotals = activeSex === 'Masculino' 
-        ? [450, 550, 650, 750, 825, 880, 920, 960, 1000] // Men
-        : [300, 380, 420, 480, 520, 560, 600, 640, 680]; // Women
-
-    const series = currentClasses.map((weightClass, index) => {
-        const data = generateTrend(classMaxTotals[index] || 500);
-        return {
-            name: weightClass,
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: { width: 2 },
-            emphasis: { focus: 'series' },
-            data: data
-        };
-    });
-
-    return {
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        tooltip: {
-            trigger: 'axis',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            borderRadius: 8,
-            padding: 12,
-            textStyle: {
-                color: '#1f2937'
-            },
-            formatter: function (params) {
-                let result = `<div style="margin-bottom: 4px; font-weight: bold; color: #6b7280;">${params[0].axisValue}</div>`;
-                // Sort params by value descending for better readability
-                params.sort((a, b) => b.data - a.data);
-                params.forEach(param => {
-                    result += `
-                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                ${param.marker}
-                                <span style="font-size: 13px;">${param.seriesName}</span>
-                            </div>
-                            <span style="font-weight: 700; font-size: 13px;">${param.data} kg</span>
-                        </div>
-                    `;
-                });
-                return result;
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
-            axisLine: { show: true, lineStyle: { color: '#e5e7eb' } },
-            axisTick: { show: false },
-            axisLabel: { color: '#6b7280' }
-        },
-        yAxis: {
-            type: 'value',
-            max: 1000,
-            splitLine: { show: false },
-            axisLine: { show: true, lineStyle: { color: '#e5e7eb' } },
-            axisLabel: { color: '#6b7280' }
-        },
-        series: series
-    };
-};
 
 const EvolutionChart = () => {
+    // --- ESTADOS ---
     const [activeSex, setActiveSex] = useState('Masculino');
     const [activeAgeCategory, setActiveAgeCategory] = useState('Absoluto');
+    const [chartData, setChartData] = useState({});
+    const [loading, setLoading] = useState(true);
 
+    // --- CONFIGURACIÓN ---
     const sexes = ['Masculino', 'Femenino'];
-    const ageCategories = ['Subjunior', 'Junior', 'Absoluto'];
+    const ageCategories = ['Subjunior', 'Junior', 'Absoluto', 'Master'];
+    const YEARS_TO_SHOW = 10; // Mostrar últimos 10 años
 
-    // Generate the chart option
-    const chartOption = getChartOption(activeSex, activeAgeCategory);
+    // --- FETCH DATOS ---
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                // Mapeo para el backend (Masculino -> M, Femenino -> F)
+                const sexParam = activeSex === 'Masculino' ? 'M' : 'F';
+                
+                const response = await fetch(
+                    `http://localhost:8000/analytics/year-max-totals?sex=${sexParam}&category=${activeAgeCategory}`
+                );
+                
+                if (!response.ok) throw new Error('Error en la API');
+                
+                const data = await response.json();
+                setChartData(data);
+            } catch (error) {
+                console.error("Error cargando gráfica:", error);
+                setChartData({});
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchData();
+    }, [activeSex, activeAgeCategory]);
+
+    // --- GENERAR OPCIONES GRÁFICA ---
+    const getChartOption = () => {
+        const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
+        
+        // 1. Calcular rango de años
+        const currentYear = new Date().getFullYear();
+        const startYear = currentYear - YEARS_TO_SHOW;
+
+        // 2. Obtener todos los años válidos para el Eje X
+        const allYearsSet = new Set();
+        Object.keys(chartData).forEach(key => {
+            // Ignoramos categorías basura para el cálculo de años
+            if (key === 'nan' || key === 'null' || !key) return;
+
+            chartData[key].forEach(point => {
+                const year = parseInt(point[0]);
+                const val = point[1];
+                // Solo añadimos el año si tiene datos válidos y está en el rango
+                if (year >= startYear && val !== null && !isNaN(val)) {
+                    allYearsSet.add(point[0]);
+                }
+            });
+        });
+
+        // Fallback: Si no hay datos, rellenamos con años vacíos para que no rompa
+        if (allYearsSet.size === 0) {
+            for (let i = 0; i <= YEARS_TO_SHOW; i++) {
+                allYearsSet.add((startYear + i).toString());
+            }
+        }
+
+        // Ordenar años cronológicamente
+        const sortedYears = Array.from(allYearsSet).sort((a, b) => parseInt(a) - parseInt(b));
+
+        // 3. Procesar Series (Líneas)
+        const series = Object.keys(chartData)
+            // FILTRO 1: Eliminar categorías "nan" o nulas
+            .filter(weightClass => 
+                weightClass && 
+                weightClass !== 'nan' && 
+                weightClass !== 'null' && 
+                weightClass !== 'undefined'
+            )
+            // ORDENAR: Numéricamente (-93 antes que -105)
+            .sort((a, b) => {
+                const cleanA = parseFloat(a.replace('+', '').replace('-', ''));
+                const cleanB = parseFloat(b.replace('+', '').replace('-', ''));
+                return (cleanA || 999) - (cleanB || 999);
+            })
+            .map(weightClass => {
+                // FILTRO 2: Eliminar puntos nulos o fuera de rango dentro de la línea
+                const filteredData = chartData[weightClass]
+                    .filter(point => {
+                        const year = parseInt(point[0]);
+                        const total = point[1];
+                        
+                        const isInRange = year >= startYear;
+                        const isValidNumber = total !== null && total !== undefined && !isNaN(total);
+                        
+                        return isInRange && isValidNumber;
+                    })
+                    .sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
+
+                return {
+                    name: weightClass,
+                    type: 'line',
+                    data: filteredData, 
+                    smooth: true,
+                    showSymbol: true,
+                    symbolSize: 6,
+                    connectNulls: true, // Conecta si falta un año intermedio
+                    endLabel: {
+                        show: true,
+                        formatter: '{a}',
+                        distance: 10
+                    },
+                    lineStyle: { width: 3 },
+                    emphasis: { focus: 'series' }
+                };
+            })
+            // Eliminar series que se quedaron vacías tras el filtrado
+            .filter(serie => serie.data.length > 0);
+
+        return {
+            color: colors,
+            grid: {
+                left: '3%',
+                right: '10%', // Margen derecho para las etiquetas endLabel
+                bottom: '10%',
+                top: '15%',
+                containLabel: true
+            },
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                textStyle: { color: '#1f2937' },
+                formatter: function (params) {
+                    if (params.length === 0) return '';
+                    
+                    let result = `<div style="margin-bottom: 6px; font-weight: bold; color: #374151; border-bottom: 1px solid #eee; padding-bottom: 4px;">Año ${params[0].axisValue}</div>`;
+                    
+                    // Filtramos nulos y ordenamos por total
+                    const validParams = params.filter(p => p.value[1] !== null && !isNaN(p.value[1]));
+                    validParams.sort((a, b) => b.value[1] - a.value[1]);
+                    
+                    validParams.forEach(param => {
+                        // param.value es [Año, Total, Nombre]
+                        const total = param.value[1];
+                        const athleteName = param.value[2] || 'Desconocido'; // Leemos el nombre (índice 2)
+                        
+                        result += `
+                            <div style="margin-top: 6px; font-size: 13px;">
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                    ${param.marker} 
+                                    <span style="font-weight: 600; color: #4b5563;">${param.seriesName}</span>
+                                    <span style="margin-left: auto; font-weight: 700; color: #111;">${total} kg</span>
+                                </div>
+                                <div style="color: #6b7280; font-size: 11px; padding-left: 14px;">
+                                    ${athleteName}
+                                </div>
+                            </div>`;
+                    });
+                    return result;
+                }
+            },
+            legend: {
+                data: series.map(s => s.name),
+                type: 'scroll',
+                bottom: 0,
+                textStyle: { color: '#9ca3af' }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: sortedYears,
+                axisLine: { lineStyle: { color: '#374151' } },
+                axisLabel: { color: '#9ca3af' }
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Total (kg)',
+                nameTextStyle: { color: '#9ca3af', padding: [0, 0, 0, 20] },
+                splitLine: { lineStyle: { type: 'dashed', color: '#374151' } },
+                axisLabel: { color: '#9ca3af' },
+                scale: true // Ajuste dinámico del eje Y
+            },
+            series: series.length > 0 ? series : [{ type: 'line', data: [] }]
+        };
+    };
+
+    // --- RENDERIZADO ---
     return (
         <div className="evolution-chart-card">
+            {/* Cabecera */}
             <div className="evolution-chart-header">
                 <div>
-                    <h3 className="evolution-chart-title">Evolución Récord España (Total)</h3>
-                    <p className="evolution-chart-subtitle">Evolución por categoría de peso</p>
+                    <h3 className="evolution-chart-title">Evolución de Récords de Total</h3>
+                    <p className="evolution-chart-subtitle">
+                        Mejores marcas anuales por categoría de peso en la última década
+                    </p>
                 </div>
+                
+                {/* Controles */}
                 <div className="evolution-chart-controls">
                     <div className="evolution-chart-filters">
                         {sexes.map(sex => (
@@ -127,7 +215,6 @@ const EvolutionChart = () => {
                             </button>
                         ))}
                     </div>
-                    
                     <div className="evolution-chart-filters">
                         {ageCategories.map(cat => (
                             <button
@@ -141,13 +228,21 @@ const EvolutionChart = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Gráfica ECharts */}
             <div className="evolution-chart-container">
-                <ReactECharts 
-                    option={chartOption} 
-                    style={{ height: '100%', width: '100%' }}
-                    opts={{ renderer: 'svg' }}
-                    notMerge={true} 
-                />
+                {loading ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: '#9ca3af' }}>
+                        Cargando datos...
+                    </div>
+                ) : (
+                    <ReactECharts 
+                        option={getChartOption()} 
+                        style={{ height: '100%', width: '100%' }}
+                        opts={{ renderer: 'svg' }}
+                        notMerge={true} // Importante para refrescar completamente al cambiar filtros
+                    />
+                )}
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Trophy, Users, Dumbbell, Settings, Menu, Moon, HelpCircle, PanelLeftClose } from 'lucide-react';
+import { Home, Trophy, Users, Dumbbell, Settings, Menu, HelpCircle, PanelLeftClose, Medal, Calendar } from 'lucide-react';
 import logo from '../assets/RackAIv2.png';
 import '../styles/Sidebar.css';
 
@@ -13,10 +13,12 @@ const Sidebar = () => {
   ];
 
   const datosItems = [
-    { name: 'Competiciones', path: '/competitions', icon: Trophy },
+    { name: 'Competiciones', path: '/competitions', icon: Calendar },
+    { name: 'Rankings', path: '/rankings', icon: Medal },
     { name: 'Atletas', path: '/athletes', icon: Dumbbell },
     { name: 'Clubes', path: '/clubs', icon: Users },
   ];
+
 
   const generalItems = [
     { name: 'Ajustes', path: '/settings', icon: Settings },
