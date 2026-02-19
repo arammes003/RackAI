@@ -19,28 +19,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-analytics = DashboardAnalytics()
+# analytics = DashboardAnalytics()
 
 
-@app.get("/analytics/upcoming")
-def upcoming_competitions(limit: int = 5):
-    """Returns upcoming competitions."""
-    return analytics.get_upcoming_competitions(limit)
+# @app.get("/analytics/upcoming")
+# def upcoming_competitions(limit: int = 5):
+#     """Returns upcoming competitions."""
+#     return analytics.get_upcoming_competitions(limit)
 
 
-@app.post("/ingest/upcoming")
-def ingest_upcoming():
-    """Triggers the scraping of upcoming competitions from local CSV."""
-    try:
-        competitions = analytics.ingest_upcoming_competitions()
-        return {
-            "status": "success",
-            "count": len(competitions),
-            "data": competitions,
-            "message": "Upcoming competitions ingested successfully",
-        }
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+# @app.post("/ingest/upcoming")
+# def ingest_upcoming():
+#     """Triggers the scraping of upcoming competitions from local CSV."""
+#     try:
+#         competitions = analytics.ingest_upcoming_competitions()
+#         return {
+#             "status": "success",
+#             "count": len(competitions),
+#             "data": competitions,
+#             "message": "Upcoming competitions ingested successfully",
+#         }
+#     except Exception as e:
+#         return {"status": "error", "message": str(e)}
 
 
 """
