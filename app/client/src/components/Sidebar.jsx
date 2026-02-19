@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, Trophy, Users, Dumbbell, Settings, Menu, HelpCircle, PanelLeftClose, Medal, Calendar } from 'lucide-react';
-import logo from '../assets/RackAIv2.png';
+import logo from '../assets/RackAIv2.avif';
 import '../styles/Sidebar.css';
 
 const Sidebar = () => {
