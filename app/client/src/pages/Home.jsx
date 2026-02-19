@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import StatCard from '../components/stats/StatCard';
 import HighlightCard from '../components/stats/HighlightCard';
-import PodiumLeaderboard from '../components/stats/PodiumLeaderboard';
-// import LeaderboardWidget from '../components/stats/LeaderboardTable';
 import UpcomingEventsCard from '../components/stats/UpcomingEventsCard';
 import { Users, Trophy } from 'lucide-react';
 import '../styles/Home.css';
