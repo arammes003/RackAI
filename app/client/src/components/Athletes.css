@@ -1,0 +1,216 @@
+
+.athletes-container {
+  background-color: #0f172a; /* Slate 900 - Dark Background */
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.athletes-header {
+  margin-bottom: 2rem;
+}
+
+.athletes-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Filters */
+.athletes-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background-color: #1e293b; /* Slate 800 */
+  color: #94a3b8; /* Slate 400 */
+  border: 1px solid #334155; /* Slate 700 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background-color: #334155; /* Slate 700 */
+  color: white;
+  border-color: #475569; /* Slate 600 */
+}
+
+.filter-primary {
+  background-color: #3b82f6; /* Blue 500 */
+  color: white;
+  border: none;
+}
+
+.filter-primary:hover {
+  background-color: #2563eb; /* Blue 600 */
+}
+
+/* Grid Layout */
+.athletes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Athlete Card */
+.athlete-card {
+  background-color: #1e293b; /* Slate 800 */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  border: 1px solid #334155; /* Slate 700 */
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.athlete-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  border-color: #6366f1; /* Indigo 500 - Glow effect */
+}
+
+/* Selected Card (Glowing Border) */
+.athlete-card.selected {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* GL Badge */
+.gl-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #4f46e5, #ec4899);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.gl-badge span {
+  font-size: 0.6rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Profile Image */
+.athlete-image-container {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #1e293b;
+  position: relative;
+}
+
+.athlete-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.athlete-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+/* Info */
+.athlete-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: white;
+}
+
+.athlete-category {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.country-flag {
+  width: 1.25rem;
+  height: 0.9rem;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+  padding: 1rem 0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* Total */
+.athlete-total {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+}
+
+.athlete-total span {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-left: 0.25rem;
+}
+
+.total-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: -0.25rem;
+  display: block;
+}

@@ -13,16 +13,16 @@ const Sidebar = () => {
   ];
 
   const datosItems = [
-    { name: 'Competiciones', path: '/competitions', icon: Calendar },
+    { name: 'Competiciones', path: '/competiciones', icon: Calendar },
     { name: 'Rankings', path: '/rankings', icon: Medal },
-    { name: 'Atletas', path: '/athletes', icon: Dumbbell },
-    { name: 'Clubes', path: '/clubs', icon: Users },
+    { name: 'Atletas', path: '/atletas', icon: Dumbbell },
+    { name: 'Clubes', path: '/clubes', icon: Users },
   ];
 
 
   const generalItems = [
-    { name: 'Ajustes', path: '/settings', icon: Settings },
-    { name: 'Ayuda', path: '/help', icon: HelpCircle },
+    { name: 'Ajustes', path: '/ajustes', icon: Settings },
+    { name: 'Ayuda', path: '/ayuda', icon: HelpCircle },
   ];
 
   const renderNavItems = (items) => items.map((item) => {

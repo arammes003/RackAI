@@ -2,11 +2,12 @@ from dataclasses import dataclass, field
 from typing import Optional, Dict, Any
 from datetime import datetime
 
+
 @dataclass
 class RecordEntry:
-    value: float 
-    holder_name: str 
-    holder_slug: str      
+    value: float
+    holder_name: str
+    holder_slug: str
     date: Optional[datetime] = None
     location: Optional[str] = None
 
@@ -19,17 +20,17 @@ class RecordEntry:
             holder_name=data.get("holder_name", "Unknown"),
             holder_slug=data.get("holder_slug", "unknown"),
             date=data.get("date"),
-            location=data.get("location")
+            location=data.get("location"),
         )
+
 
 @dataclass
 class Record:
-
     federation_slug: str
     federation: str
-    sex: str     
-    equipment: str   
-    weight_class: str   
+    sex: str
+    equipment: str
+    weight_class: str
     age_class: str
 
     squat: Optional[RecordEntry] = None
@@ -41,9 +42,9 @@ class Record:
     def from_mongo(cls, data: dict):
         if not data:
             return None
-        
+
         key_info = data.get("_id", {})
-        
+
         return cls(
             federation_slug=key_info.get("federation_slug", "Unknown"),
             federation=key_info.get("federation", "Unknown"),
@@ -51,9 +52,8 @@ class Record:
             equipment=key_info.get("equipment", "Unknown"),
             weight_class=key_info.get("weight_class", "Unknown"),
             age_class=key_info.get("age_class", "Unknown"),
-
             squat=RecordEntry.from_dict(data.get("squat")),
             bench=RecordEntry.from_dict(data.get("bench")),
             deadlift=RecordEntry.from_dict(data.get("deadlift")),
-            total=RecordEntry.from_dict(data.get("total"))
+            total=RecordEntry.from_dict(data.get("total")),
         )

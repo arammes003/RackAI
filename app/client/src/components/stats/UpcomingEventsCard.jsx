@@ -2,7 +2,7 @@ import React from 'react';
 import '../../styles/Home.css';
 import { Calendar, MapPin } from 'lucide-react';
 
-const UpcomingEventsCard = ({ events }) => {
+const UpcomingEventsCard = ({ events, loading }) => {
     // Helper to format date
     const formatDate = (dateString, type) => {
         if (!dateString) return '';
@@ -29,6 +29,28 @@ const UpcomingEventsCard = ({ events }) => {
         }
         return {}; // Default (Blue/AEP)
     };
+
+    if (loading) {
+        return (
+            <div className="upcoming-card">
+                <div className="upcoming-card-header">
+                    <span className="upcoming-card-title">Próximas Competiciones</span>
+                    <Calendar className="stat-card-icon" size={20} style={{ color: '#3b82f6' }} />
+                </div>
+                <div className="upcoming-list">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="upcoming-item animate-pulse">
+                            <div className="upcoming-date-box skeleton"></div>
+                            <div className="upcoming-info w-full">
+                                <div className="skeleton rounded w-3/4 mb-2" style={{height: '1rem'}}></div>
+                                <div className="skeleton rounded w-1/2" style={{height: '0.75rem'}}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="upcoming-card">

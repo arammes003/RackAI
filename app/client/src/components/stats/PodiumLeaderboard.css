@@ -1,0 +1,210 @@
+/* F1 Style Mobile First */
+
+/* Container */
+/* Container (unified card) */
+.f1-leaderboard-container {
+    background-color: white;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    /* gap: 1.5rem; */ 
+    grid-column: span 2; 
+    height: 100%;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 1280px) {
+    .f1-leaderboard-container {
+        grid-column: span 2;
+    }
+}
+
+/* Header Re-use with modifications */
+/* Header Re-use with modifications */
+.podium-header {
+    display: flex;
+    justify-content: space-between; /* Space out title and tabs */
+    align-items: center;
+    background-color: transparent;
+    padding: 0 0 1.5rem 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 2px solid #f1f5f9;
+    margin-bottom: 1.5rem;
+}
+
+.podium-title { font-weight: 800; font-size: 1.25rem; color: #0f172a; text-transform: uppercase; font-style: italic; }
+.podium-subtitle { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+
+.podium-tabs { display: flex; gap: 0.5rem; }
+.podium-tab {
+    padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700;
+    cursor: pointer; border: 1px solid transparent; transition: all 0.2s;
+    background: #f1f5f9; color: #64748b;
+}
+.podium-tab:hover { background: #e2e8f0; }
+.podium-tab.active-mixed { background: #4f46e5; color: white; }
+.podium-tab.active-male { background: #2563eb; color: white; }
+.podium-tab.active-female { background: #db2777; color: white; }
+
+
+/* --- F1 PODIUM (Horizontal) --- */
+.f1-podium-display {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* F1 CARD Common */
+.f1-card {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    /* Aspect Ratio approx */
+    width: 160px; 
+}
+
+.f1-card:hover { transform: translateY(-4px); }
+
+/* Rank Specific Styles (Backgrounds & Heights) */
+.f1-card.rank-1 {
+    height: 280px;
+    width: 200px;
+    background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%); /* Deep Violet/Blue */
+    z-index: 10;
+}
+
+.f1-card.rank-2 {
+    height: 240px;
+    background: linear-gradient(135deg, #ea580c 0%, #7c2d12 100%); /* Orange */
+}
+
+.f1-card.rank-3 {
+    height: 220px;
+    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%); /* Blue */
+}
+
+/* Big Rank Number background */
+.f1-big-rank {
+    position: absolute;
+    top: -1rem;
+    left: -0.5rem;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.15); /* Subtle white overlay */
+    line-height: 1;
+    font-style: italic;
+    z-index: 0;
+}
+.rank-1 .f1-big-rank { font-size: 10rem; top: -1.5rem; left: -1rem; }
+
+/* Image Container */
+.f1-image-container {
+    position: absolute;
+    bottom: 3.5rem; /* Space for info bar */
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.f1-athlete-img {
+    height: 100%; /* Make image fill vertical space */
+    max-width: 140%; /* Allow slightly wider */
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+/* Info Bar (Name) */
+.f1-info-bar {
+    position: relative;
+    z-index: 2;
+    background-color: white; /* Default fallback */
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 3.5rem;
+}
+.rank-1 .f1-info-bar { background-color: #1e1b4b; /* Dark Blue match */ color: white; }
+.rank-2 .f1-info-bar { background-color: #7c2d12; /* Dark Orange match */ color: white; }
+.rank-3 .f1-info-bar { background-color: #1e3a8a; /* Dark Blue match */ color: white; }
+
+.f1-flag { font-size: 1.25rem; }
+.f1-name {
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rank-1 .f1-name { font-size: 1.5rem; }
+
+/* Points Box */
+.f1-points-box {
+    position: absolute;
+    bottom: 3.5rem; /* Sit right above info bar */
+    right: 0;
+    background-color: white;
+    padding: 0.25rem 0.5rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    border-top-left-radius: 0.5rem;
+    min-width: 2.5rem;
+}
+
+.f1-points-value { font-weight: 900; font-size: 1.125rem; color: #0f172a; }
+.f1-points-label { font-size: 0.5rem; font-weight: 700; color: #64748b; }
+
+/* Sub Info (Full Name / Team) - hidden/subtle */
+.f1-sub-info {
+    display: none; /* Hide to match clean F1 look, info is in bar */
+}
+
+
+/* --- LIST SECTION --- */
+.f1-list-section {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.f1-list-row {
+    display: grid;
+    /* Rank | Flag | Name | Team | Points */
+    grid-template-columns: 2rem 2rem 3fr 2fr 3rem;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+.f1-list-row:last-child { border-bottom: none; }
+
+.f1-list-rank { font-weight: 700; color: #475569; text-align: center; }
+.f1-list-flag { text-align: center; font-size: 1rem; }
+.f1-list-name { font-weight: 800; color: #0f172a; text-transform: uppercase; font-style: italic; font-size: 0.875rem; }
+.f1-list-team { font-weight: 600; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.f1-list-points { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.f1-list-points .val { font-weight: 900; color: #0f172a; font-size: 1rem; }
+.f1-list-points .lbl { font-size: 0.5rem; color: #94a3b8; font-weight: 700; }

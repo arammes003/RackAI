@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import StatCard from '../components/stats/StatCard';
 import HighlightCard from '../components/stats/HighlightCard';
-import EvolutionChart from '../components/stats/EvolutionChart';
+import PodiumLeaderboard from '../components/stats/PodiumLeaderboard';
+// import LeaderboardWidget from '../components/stats/LeaderboardTable';
 import UpcomingEventsCard from '../components/stats/UpcomingEventsCard';
 import { Users, Trophy } from 'lucide-react';
-import adriImage from '../assets/adri.png';
 import '../styles/Home.css';
+import LeaderboardWidget from '../components/stats/LeaderboardTable';
 
 const Home = () => {
     // 1. Estado unificado para guardar los datos procesados de todas las métricas
@@ -27,14 +28,17 @@ const Home = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                // Fetch growth history
-                const growthResponse = await fetch('http://localhost:8000/analytics/growth-history');
+                // Fetch competitions history
+                const competitionsResponse = await fetch('http://localhost:8000/analytics/competitions-per-year');
+                // Fetch athletes history from Postgres
+                const athletesResponse = await fetch('http://localhost:8000/analytics/athletes-per-year');
                 // Fetch upcoming competitions
                 const upcomingResponse = await fetch('http://localhost:8000/analytics/upcoming?limit=5');
                 
-                if (!growthResponse.ok) throw new Error(`HTTP error! status: ${growthResponse.status}`);
+                if (!competitionsResponse.ok) throw new Error(`HTTP error! status: ${competitionsResponse.status}`);
                 
-                const growthData = await growthResponse.json();
+                const competitionsData = await competitionsResponse.json();
+                const athletesData = athletesResponse.ok ? await athletesResponse.json() : [];
                 const upcomingData = upcomingResponse.ok ? await upcomingResponse.json() : [];
 
                 // --- FUNCIÓN HELPER (REUTILIZABLE) ---
@@ -79,8 +83,8 @@ const Home = () => {
                 };
 
                 // Procesamos ambas series de datos
-                const athleteStats = processGrowthData(growthData.athletes);
-                const competitionStats = processGrowthData(growthData.competitions);
+                const athleteStats = processGrowthData(athletesData);
+                const competitionStats = processGrowthData(competitionsData);
 
                 setStats({
                     athletes: athleteStats,
@@ -150,17 +154,17 @@ const Home = () => {
         }]
     };
 
-    if (stats.loading) {
-        return <div className="p-10 text-white">Cargando datos...</div>;
-    }
+    // if (stats.loading) {
+    //     return <div className="p-10 text-white">Cargando datos...</div>;
+    // }
 
     const currentYearLabel = new Date().getFullYear();
 
     return (
         <div className="home-container">
             <div className="home-section">
-                <h2 className="home-section-title">Resumen general</h2>
-                <p className="home-section-subtitle">Evolución del Powerlifting en España.</p>
+                <h2 className="home-section-title">Resumen General</h2>
+                <p className="home-section-subtitle">Evolución del Powerlifting en España</p>
                 
                 <div className="stats-grid">
                     {/* Tarjeta 1: Atletas */}
@@ -173,6 +177,7 @@ const Home = () => {
                         chartOption={athletesChartOption}
                         color="#06b6d4" 
                         positiveGreen={true}
+                        loading={stats.loading}
                     />
                     
                     {/* Tarjeta 2: Competiciones (AHORA DINÁMICA) */}
@@ -185,22 +190,18 @@ const Home = () => {
                         chartOption={competitionsChartOption}
                         color="#10b981"
                         positiveGreen={true} 
+                        loading={stats.loading}
                     />
+
 
                     {/* Tarjeta 3: Highlight */}
-                    <HighlightCard 
-                        title="MARCA DEL MES"
-                        athleteName="Adrián Magaña Marín"
-                        stats="320kg - Peso muerto"
-                        category="-83 Open"
-                        imageUrl={adriImage}
-                    />
+                    <HighlightCard />
                     
-                    {/* Tarjeta 4: Evolución */}
-                    <EvolutionChart />
+                    {/* Tarjeta 4: Tabla de Clasificación */}
+                    <LeaderboardWidget />
 
                      {/* Tarjeta 5: Próximas Competiciones */}
-                     <UpcomingEventsCard events={stats.upcomingEvents} />
+                     <UpcomingEventsCard events={stats.upcomingEvents} loading={stats.loading} />
                 </div>
             </div>
         </div>

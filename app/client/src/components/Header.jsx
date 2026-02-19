@@ -1,7 +1,11 @@
-import { Bell, Moon, Search } from 'lucide-react';
+import { useState } from 'react';
+import { Bell, Moon, Search, Camera } from 'lucide-react';
 import '../styles/Header.css';
+import ProfileUploadModal from './ProfileUploadModal';
 
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="header-wrapper">
       <header className="header">
@@ -24,20 +28,18 @@ const Header = () => {
             <Moon size={20} />
           </button>
           <div className="user-section">
-            <div className="user-avatar-container">
-              <img 
-                src="https://imgs.search.brave.com/hBN2I03fDLcovnqJJypBATrSytlToeOW87L29RIt_Iw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kMmdq/cWg5ajI2dW5wMC5j/bG91ZGZyb250Lm5l/dC9wcm9maWxlcGlj/Lzk4ZmM5OTBlYmUy/ZTZiYTViOTc3ZGFi/ZDYzYTRmNDY2" 
-                alt="Avatar" 
-                className="user-avatar-img" 
-              />
-            </div>
-            <div className="user-info">
-              <span className="user-name">Alfonso Ramírez Mestanza</span>
-              <span className="user-email">aramirezmes03@rackai.com</span>
-            </div>
+            <button className="upload-btn" onClick={() => setIsModalOpen(true)}>
+              <Camera size={20} />
+              <span>Sube tu foto</span>
+            </button>
           </div>
         </div>
       </header>
+      
+      <ProfileUploadModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };

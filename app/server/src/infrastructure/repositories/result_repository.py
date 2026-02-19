@@ -3,6 +3,7 @@ from pymongo import ASCENDING, DESCENDING
 from src.infrastructure.database import MongoDB
 from src.domain.entities import CompetitionResult
 
+
 class ResultRepository:
     def __init__(self):
         self.db = MongoDB().get_database()
@@ -17,11 +18,71 @@ class ResultRepository:
 
     def create_indexes(self):
         """Optimiza la base de datos creando índices."""
+
+        # --- BÚSQUEDAS BÁSICAS ---
         self.collection.create_index([("athlete.id", ASCENDING)])
         self.collection.create_index([("competition.id", ASCENDING)])
         self.collection.create_index([("athlete.name", ASCENDING)])
-        self.collection.create_index([("results.total", DESCENDING)])
-        print("✅ Índices de Resultados creados en MongoDB")
+        # Este índice simple por fecha también ayuda a gráficas generales sin filtro de país
+        self.collection.create_index([("competition.date", ASCENDING)])
+
+        """
+           ------ DASHBOARDS ------                
+        """
+
+        # 1. Ranking Global de España
+        self.collection.create_index(
+            [
+                ("athlete.country", ASCENDING),
+                ("category.tested", ASCENDING),
+                ("points.goodlift", DESCENDING),
+            ],
+            name="idx_country_rankings_global",
+        )
+
+        # 2. Ranking de España por Federación
+        self.collection.create_index(
+            [
+                ("athlete.country", ASCENDING),
+                ("competition.federation", ASCENDING),
+                ("category.tested", ASCENDING),
+                ("points.goodlift", DESCENDING),
+            ],
+            name="idx_country_rankings_specific_federation",
+        )
+
+        # 3. Ranking Mundial (Goodlift)
+        self.collection.create_index(
+            [
+                ("competition.federation", ASCENDING),
+                ("category.tested", ASCENDING),
+                ("points.goodlift", DESCENDING),
+            ],
+            name="idx_rankings_goodlift",
+        )
+
+        # 4. Ranking por País (Total Kg - Mapa)
+        self.collection.create_index(
+            [
+                ("athlete.sex", ASCENDING),
+                ("category.equipment", ASCENDING),
+                ("category.tested", ASCENDING),
+                ("results.total", DESCENDING),
+            ],
+            name="idx_country_champions",
+        )
+
+        # 5. NUEVO: Crecimiento Anual (Atletas por Año en España)
+        self.collection.create_index(
+            [
+                ("athlete.country", ASCENDING),
+                ("category.tested", ASCENDING),
+                ("competition.date", ASCENDING),
+            ],
+            name="idx_growth_stats_spain",
+        )
+
+        print("✅ Índices de Resultados actualizados y optimizados en MongoDB")
 
     def get_by_competition(self, competition_slug: str) -> List[CompetitionResult]:
         """Devuelve la 'Leaderboard' de una competición."""
@@ -40,8 +101,8 @@ class ResultRepository:
         Trae el historial completo de una lista de atletas.
         """
         query = {
-            "athlete.id": { "$in": slugs },
-            "results.total": { "$gt": 0 } # Ignoramos nulos
+            "athlete.id": {"$in": slugs},
+            "results.total": {"$gt": 0},  # Ignoramos nulos
         }
         # Ordenamos por fecha para que la gráfica salga bien
         cursor = self.collection.find(query).sort("competition.date", 1)
@@ -78,5 +139,5 @@ class ResultRepository:
             dots=data["points"].get("dots"),
             wilks=data["points"].get("wilks"),
             glossbrenner=data["points"].get("glossbrenner"),
-            goodlift=data["points"].get("goodlift")
+            goodlift=data["points"].get("goodlift"),
         )
