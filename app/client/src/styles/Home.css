@@ -1,33 +1,3 @@
-/* Wrapper for title and grid to ensure full height */
-.home-section {
-  display: flex;
-  flex-direction: column;
-  flex: 1; /* Grow to fill home-container */
-  min-height: 0; /* Enable shrinking */
-}
-
-/* Ensure home-container fills app-minimal */
-.home-container {
-  height: 100%; 
-  display: flex;
-  flex-direction: column;
-}
-
-.home-section-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    color: #111827;
-    margin-bottom: 0.25rem;
-}
-
-.home-section-subtitle {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-bottom: 1rem;
-    font-weight: 500;
-}
-
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -53,12 +23,19 @@
 /* Stat Card Styling */
 .stat-card {
   background-color: white;
-  border-radius: 1.5rem; /* Rounded corners match image */
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
   padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   height: 11rem;
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px) translateX(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .stat-card-header {
@@ -67,42 +44,49 @@
 }
 
 .stat-card-title {
-  font-size: 16px;
-  font-weight: 600;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+  font-weight: 500;
   color: #6b7280;
 }
 
 .stat-card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100px;
 }
 
 .stat-card-value-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .stat-card-main-value {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .stat-card-value {
-  font-size: 2.5rem;
-  font-weight: 800;
+  font-family: "Oswald", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
   color: #111827;
   line-height: 1;
 }
 
 .stat-card-trend {
+  font-family: "Oswald", sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
 }
 
 .stat-card-trend.positive {
@@ -111,13 +95,13 @@
 }
 
 .stat-card-trend.positive-green {
-    background-color: #d1fae5; /* Emerald 100 */
-    color: #059669; /* Emerald 600 */
+  background-color: #d1fae5; /* Emerald 100 */
+  color: #059669; /* Emerald 600 */
 }
 
 .stat-card-trend.negative {
-    background-color: #fee2e2; /* Red 100 */
-    color: #dc2626; /* Red 600 */
+  background-color: #fee2e2; /* Red 100 */
+  color: #dc2626; /* Red 600 */
 }
 
 .stat-card-subtitle {
@@ -137,489 +121,329 @@
 
 /* Highlight Card Styling */
 .highlight-card {
-  background: 
-    linear-gradient(#111827, #111827) padding-box,
-    linear-gradient(to bottom, #fbbf24, transparent) border-box;
-  border: 3px solid transparent;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  background-color: #111827; /* Dark base */
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 4px 4px 0px 0px #fbbf24; /* Solid gold geometric shadow */
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  min-height: 140px;
-  position: relative;
   color: white;
   height: 11rem;
+  overflow: hidden; /* Fixes background bleeding out of corners */
+  transition: all var(--transition-fast);
+  position: relative;
 }
 
-.highlight-card-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #fbbf24;
+.highlight-card:hover {
+  transform: translateY(-2px) translateX(-2px);
+  box-shadow: 6px 6px 0px 0px #fbbf24; /* Harder gold shadow on hover */
+}
+
+/* 
+  Use a pseudo-element for the gradient fade on top of the image.
+  We fade from the dark background color (#111827) on the left
+  to transparent on the right, blending the photo perfectly. 
+*/
+.highlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, #111827 0%, #111827 40%, rgba(17, 24, 39, 0.6) 65%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.highlight-card-header {
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 3;
+}
+
+.highlight-card-badge {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #111827;
+  background-color: #fbbf24; /* Amber badge */
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .highlight-card-content {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    height: 100%;
-}
-
-.highlight-card-image-container {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #fbbf24; /* Amber border */
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.highlight-card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  display: flex;
+  justify-content: flex-start; /* Stack items horizontally */
+  align-items: center;
+  height: 100%;
+  /* Removed position: relative so absolute child anchors to highlight-card */
 }
 
 .highlight-card-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    min-width: 0;
-}
-
-.highlight-card-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 55%; /* Constrain text to left 55% */
+  z-index: 2;
+  position: relative;
+  padding-right: 1rem;
 }
 
 .highlight-card-stats {
-    font-size: 0.875rem;
-    color: #9ca3af; /* Gray 400 */
-    font-weight: 500;
-    margin-bottom: 0.25rem;
+  font-family: "Oswald", sans-serif;
+  font-size: 2.75rem;
+  color: white;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.highlight-card-name {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  color: #f3f4f6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 .highlight-card-category {
-    font-size: 0.875rem;
-    color: #6b7280; /* Gray 500 */
-    font-weight: 500;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
+
+.highlight-card-image-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%; /* Image takes right 50% */
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Gradient Mask to fade the image into the dark background */
+.highlight-card-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, #111827 0%, rgba(17,24,39,0.3) 60%, transparent 100%);
+  z-index: 2;
+}
+
+.highlight-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%; /* Keep heads in view */
+  filter: grayscale(80%) contrast(1.1);
+  opacity: 1;
+  mask-image: linear-gradient(to left, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+}
+
+@media (min-width: 1921px) {
+  .highlight-card-image {
+    width:60%; /* Haz la imagen más corta (menos ancha) */
+    margin-left: auto; /* Mantenla alineada a la derecha */
+    display: block;
+  }
+}
+
+
 
 /* Evolution Chart Styling */
 .evolution-chart-card {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    grid-column: span 2; /* Occupy 2 columns by default (2/3 in 3-col grid) */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 20rem;
+  background-color: white;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  grid-column: span 2; /* Occupy 2 columns by default (2/3 in 3-col grid) */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 20rem;
 }
-
-
 
 .evolution-chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
 .evolution-chart-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #111827;
-    margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.25rem;
 }
 
 .evolution-chart-subtitle {
-    font-size: 0.875rem;
-    color: #6b7280;
-    font-weight: 600;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .evolution-chart-controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap; 
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .evolution-chart-filters {
-    display: flex;
-    gap: 0.25rem;
-    background-color: #f3f4f6;
-    padding: 0.25rem; /* Reduced padding */
-    border-radius: 0.5rem; /* Slightly smaller radius */
+  display: flex;
+  gap: 0.25rem;
+  background-color: #f3f4f6;
+  padding: 0.25rem; /* Reduced padding */
+  border-radius: 0.5rem; /* Slightly smaller radius */
 }
 
 .filter-button {
-    padding: 0.25rem 0.75rem; /* Reduced padding */
-    border-radius: 0.375rem;
-    font-size: 0.75rem; /* Smaller font size */
-    font-weight: 600;
-    color: #4b5563;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
+  padding: 0.25rem 0.75rem; /* Reduced padding */
+  border-radius: 0.375rem;
+  font-size: 0.75rem; /* Smaller font size */
+  font-weight: 600;
+  color: #4b5563;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .filter-button.active {
-    background-color: white;
-    color: #111827;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  background-color: white;
+  color: #111827;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .filter-button:hover:not(.active) {
-    color: #111827;
+  color: #111827;
 }
 
 .evolution-chart-select {
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e5e7eb;
-    background-color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #374151;
-    cursor: pointer;
-    outline: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
 }
 
 .evolution-chart-select:focus {
-    border-color: #fbbf24;
-    box-shadow: 0 0 0 2px #fbbf24;
-    outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 2px #fbbf24;
+  outline: none;
 }
 
 .evolution-chart-container {
-    flex: 1;
-    width: 100%;
+  flex: 1;
+  width: 100%;
 }
 
 @media (max-width: 1280px) {
-    .evolution-chart-card {
-        grid-column: span 2; /* Full width on tablet */
-    }
-}
-
-/* Upcoming Events Card Styling */
-.upcoming-card {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    height: 100%;
-    min-height: 20rem;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-
-.upcoming-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.upcoming-card-title {
-    font-size: 1.125rem; /* Equal to h3/h4 roughly, slightly smaller than chart title? Chart title is 1.25rem */
-    font-weight: 700;
-    color: #111827;
-}
-
-.upcoming-list {
-    flex: 1;
-    overflow-y: scroll; /* Allow scrolling for content overflow */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-right: 0.5rem;
-    scrollbar-width: none; /* Hide scrollbar Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.upcoming-list::-webkit-scrollbar {
-  display: none;
-}
-
-.upcoming-item {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f3f4f6;
-    flex: 1; /* Distribute available vertical space */
-    min-height: 4.5rem; /* Ensure they don't get too small */
-}
-.upcoming-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.upcoming-date-box {
-    background-color: #eff6ff;
-    color: #3b82f6;
-    border-radius: 0.75rem;
-    padding: 0.5rem;
-    text-align: center;
-    min-width: 3.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.upcoming-day {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.upcoming-month {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 0.125rem;
-}
-
-.upcoming-info {
-    flex: 1;
-    min-width: 0; /* truncate text */
-}
-
-.upcoming-name {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 0.25rem;
-    line-height: 1.2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* white-space: nowrap;  maybe allow wrap? */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.upcoming-details {
-    font-size: 0.75rem;
-    color: #6b7280;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  .evolution-chart-card {
+    grid-column: span 2; /* Full width on tablet */
+  }
 }
 
 .evolution-chart-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #111827;
-    margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.25rem;
 }
 
 .evolution-chart-subtitle {
-    font-size: 0.875rem;
-    color: #6b7280;
-    font-weight: 600;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .evolution-chart-controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap; 
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .evolution-chart-filters {
-    display: flex;
-    gap: 0.25rem;
-    background-color: #f3f4f6;
-    padding: 0.25rem; /* Reduced padding */
-    border-radius: 0.5rem; /* Slightly smaller radius */
+  display: flex;
+  gap: 0.25rem;
+  background-color: #f3f4f6;
+  padding: 0.25rem; /* Reduced padding */
+  border-radius: 0.5rem; /* Slightly smaller radius */
 }
 
 .filter-button {
-    padding: 0.25rem 0.75rem; /* Reduced padding */
-    border-radius: 0.375rem;
-    font-size: 0.75rem; /* Smaller font size */
-    font-weight: 600;
-    color: #4b5563;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
+  padding: 0.25rem 0.75rem; /* Reduced padding */
+  border-radius: 0.375rem;
+  font-size: 0.75rem; /* Smaller font size */
+  font-weight: 600;
+  color: #4b5563;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .filter-button.active {
-    background-color: white;
-    color: #111827;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  background-color: white;
+  color: #111827;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .filter-button:hover:not(.active) {
-    color: #111827;
+  color: #111827;
 }
 
 .evolution-chart-select {
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e5e7eb;
-    background-color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #374151;
-    cursor: pointer;
-    outline: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
 }
 
 .evolution-chart-select:focus {
-    border-color: #fbbf24;
-    box-shadow: 0 0 0 2px #fbbf24;
-    outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 2px #fbbf24;
+  outline: none;
 }
 
 .evolution-chart-container {
-    flex: 1;
-    width: 100%;
+  flex: 1;
+  width: 100%;
 }
 
 @media (max-width: 1280px) {
-    .evolution-chart-card {
-        grid-column: span 2; /* Full width on tablet */
-    }
+  .evolution-chart-card {
+    grid-column: span 2; /* Full width on tablet */
+  }
 }
-
-/* Upcoming Events Card Styling */
-.upcoming-card {
-    background-color: white;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    height: 100%;
-    min-height: 20rem;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-
-.upcoming-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.upcoming-card-title {
-    font-size: 1.125rem; /* Equal to h3/h4 roughly, slightly smaller than chart title? Chart title is 1.25rem */
-    font-weight: 700;
-    color: #111827;
-}
-
-.upcoming-list {
-    flex: 1;
-    overflow-y: scroll; /* Allow scrolling for content overflow */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-right: 0.5rem;
-    scrollbar-width: none; /* Hide scrollbar Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.upcoming-list::-webkit-scrollbar {
-  display: none;
-}
-
-.upcoming-item {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f3f4f6;
-    flex: 1; /* Distribute available vertical space */
-    min-height: 4.5rem; /* Ensure they don't get too small */
-}
-.upcoming-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.upcoming-date-box {
-    background-color: #eff6ff;
-    color: #3b82f6;
-    border-radius: 0.75rem;
-    padding: 0.5rem;
-    text-align: center;
-    min-width: 3.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.upcoming-day {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.upcoming-month {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 0.125rem;
-}
-
-.upcoming-info {
-    flex: 1;
-    min-width: 0; /* truncate text */
-}
-
-.upcoming-name {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 0.25rem;
-    line-height: 1.2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* white-space: nowrap;  maybe allow wrap? */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.upcoming-details {
-    font-size: 0.75rem;
-    color: #6b7280;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.federation-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.125rem 0.375rem;
-    border-radius: 0.25rem;
-    background-color: #f3f4f6;
-    color: #374151;
-    text-transform: uppercase;
-}
-/* Leaderboard styles moved to components/stats/LeaderboardTable.css */

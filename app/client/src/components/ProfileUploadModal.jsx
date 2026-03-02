@@ -14,6 +14,16 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
   const [verificationMessage, setVerificationMessage] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   
+  const [peso, setPeso] = useState('');
+  const [nacimiento, setNacimiento] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [tiktok, setTiktok] = useState('');
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(new Array(70), (val, index) => currentYear - index);
+  const categoriasPeso = ['-55 kg', '-61 kg', '-67 kg', '-73 kg', '-81 kg', '-89 kg', '-96 kg', '-102 kg', '-109 kg', '+109 kg', '-45 kg', '-49 kg', '-55 kg (F)', '-59 kg', '-64 kg', '-71 kg', '-76 kg', '-81 kg (F)', '-87 kg', '+87 kg'];
+  
+  
   const handleSavePhoto = async () => {
     if (!athletePhoto || !athleteName) return;
     
@@ -33,7 +43,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
         formData.append('athlete_id', selectedAthlete.athlete_id);
         formData.append('file', athletePhoto);
         
-        const response = await fetch('http://localhost:8000/api/upload-profile-picture', {
+        const response = await fetch('http://localhost:8000/api/v1/upload-profile-picture', {
             method: 'POST',
             body: formData
         });
@@ -64,7 +74,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen) {
-        fetch('http://localhost:8000/api/athletes')
+        fetch('http://localhost:8000/api/v1/athletes')
             .then(res => res.json())
             .then(data => setAllAthletes(data))
             .catch(err => console.error("Error loading athletes:", err));
@@ -125,7 +135,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
 
     try {
       // Assuming the backend is running on localhost:8000 based on main.py
-      const response = await fetch('http://localhost:8000/api/verify-id', {
+      const response = await fetch('http://localhost:8000/api/v1/verify-id', {
         method: 'POST',
         body: formData,
       });
@@ -156,7 +166,10 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
     setVerificationStatus('idle');
     setVerificationMessage('');
     setShowDropdown(false);
-    setShowDropdown(false);
+    setPeso('');
+    setNacimiento('');
+    setInstagram('');
+    setTiktok('');
     onClose();
   };
 
@@ -176,112 +189,162 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
         </div>
 
         <div className="modal-body">
-          {/* 1. Buscador de Nombre */}
-          <div className="form-group">
-            <label>Nombre del Atleta</label>
-            <div className="search-input-wrapper">
-              <Search size={18} className="search-icon-modal" />
-              <input
-                type="text"
-                className="modal-input"
-                placeholder="Busca tu nombre..."
-                value={athleteName}
-                onChange={handleSearchChange}
-                onFocus={() => {
-                    if (athleteName.length > 1) setShowDropdown(true);
-                }}
-              />
-              
-              {showDropdown && filteredAthletes.length > 0 && (
-                <ul className="athlete-dropdown">
-                    {filteredAthletes.map(athlete => (
-                        <li 
-                            key={athlete.athlete_id} 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleSelectAthlete(athlete.name);
-                            }}
-                        >
-                            {athlete.name}
-                        </li>
-                    ))}
-                </ul>
-              )}
+          {/* Top Row */}
+          <div className="top-row-inputs">
+            <div className="form-group flex-2">
+              <label>Nombre del Atleta</label>
+              <div className="search-input-wrapper">
+                <Search size={18} className="search-icon-modal" />
+                <input
+                  type="text"
+                  className="modal-input"
+                  placeholder="Busca tu nombre..."
+                  value={athleteName}
+                  onChange={handleSearchChange}
+                  onFocus={() => {
+                      if (athleteName.length > 1) setShowDropdown(true);
+                  }}
+                />
+                
+                {showDropdown && filteredAthletes.length > 0 && (
+                  <ul className="athlete-dropdown">
+                      {filteredAthletes.map(athlete => (
+                          <li 
+                              key={athlete.athlete_id} 
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSelectAthlete(athlete.name);
+                              }}
+                          >
+                              {athlete.name}
+                          </li>
+                      ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group flex-1">
+              <label>Categoria de Peso</label>
+              <select className="modal-input custom-select" value={peso} onChange={e => setPeso(e.target.value)}>
+                <option value=""></option>
+                {categoriasPeso.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group flex-1">
+              <label>Año de Nacimiento</label>
+              <select className="modal-input custom-select" value={nacimiento} onChange={e => setNacimiento(e.target.value)}>
+                <option value=""></option>
+                {years.map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
             </div>
           </div>
 
-          {/* 2. Subida de DNI */}
-          <div className="form-group">
-            <label>Verificación de Identidad (DNI)</label>
-            <div className="upload-section" onClick={() => dniInputRef.current.click()}>
-              <input
-                type="file"
-                ref={dniInputRef}
-                className="file-input"
-                accept="image/*"
-                onChange={handleDniChange}
-              />
-              <div className="upload-trigger">
-                <Upload size={24} />
-                <span>{dniFile ? dniFile.name : 'Haz clic para subir foto del DNI'}</span>
+          <div className="main-grid">
+            {/* Left Column */}
+            <div className="left-col">
+              <div className="form-group">
+                <label>Verificación de Identidad (DNI)</label>
+                <div className="upload-section" onClick={() => dniInputRef.current.click()}>
+                  <input
+                    type="file"
+                    ref={dniInputRef}
+                    className="file-input"
+                    accept="image/*"
+                    onChange={handleDniChange}
+                  />
+                  <div className="upload-trigger">
+                    <Upload size={24} className="upload-icon-faded" />
+                    <span>{dniFile ? dniFile.name : 'Haz clic para subir foto del DNI'}</span>
+                  </div>
+                </div>
+                
+                {/* Botón de Verificar */}
+                <button 
+                    className="btn btn-secondary verify-btn" 
+                    onClick={handleVerify}
+                    disabled={verificationStatus === 'verifying' || !dniFile}
+                >
+                    {verificationStatus === 'verifying' ? (
+                        <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
+                            <Loader size={16} className="animate-spin" /> Verificando...
+                        </span>
+                    ) : 'Verificar Identidad'}
+                </button>
+
+                {/* Mensajes de Estado */}
+                {verificationStatus === 'success' && (
+                  <div className="verification-status success">
+                    <Check size={18} />
+                    <span>{verificationMessage}</span>
+                  </div>
+                )}
+                {verificationStatus === 'error' && (
+                  <div className="verification-status error">
+                    <AlertCircle size={18} />
+                    <span>{verificationMessage}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="social-inputs">
+                <div className="form-group">
+                  <label>Instagram</label>
+                  <input 
+                    type="text" 
+                    className="modal-input" 
+                    placeholder="ej. @atleta_pro" 
+                    value={instagram} 
+                    onChange={e => setInstagram(e.target.value)} 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>TikTok</label>
+                  <input 
+                    type="text" 
+                    className="modal-input" 
+                    placeholder="ej. @atleta_pro" 
+                    value={tiktok} 
+                    onChange={e => setTiktok(e.target.value)} 
+                  />
+                </div>
               </div>
             </div>
-            
-            {/* Botón de Verificar */}
-            <button 
-                className="btn btn-secondary" 
-                style={{marginTop: '10px', width: '100%'}}
-                onClick={handleVerify}
-                disabled={verificationStatus === 'verifying' || !dniFile}
-            >
-                {verificationStatus === 'verifying' ? (
-                    <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'}}>
-                        <Loader size={16} className="animate-spin" /> Verificando...
-                    </span>
-                ) : 'Verificar Identidad'}
-            </button>
 
-            {/* Mensajes de Estado */}
-            {verificationStatus === 'success' && (
-              <div className="verification-status success">
-                <Check size={18} />
-                <span>{verificationMessage}</span>
+            {/* Right Column */}
+            <div className="right-col">
+              <div className="privacy-notice">
+                <span className="privacy-icon">🔒</span> Privacidad Garantizada: La imagen de tu documento se procesa en tiempo real para verificar el texto y se elimina inmediatamente de la memoria de nuestros servidores. Nunca se guarda en base de datos.
               </div>
-            )}
-            {verificationStatus === 'error' && (
-              <div className="verification-status error">
-                <AlertCircle size={18} />
-                <span>{verificationMessage}</span>
-              </div>
-            )}
 
-            <div className="privacy-notice">
-              🔒 Privacidad Garantizada: La imagen de tu documento se procesa en tiempo real para verificar el texto y se elimina inmediatamente de la memoria de nuestros servidores. Nunca se guarda en base de datos.
-            </div>
-          </div>
-
-          {/* 3. Subida de Foto de Atleta */}
-          <div className="form-group">
-            <label>Foto de Perfil</label>
-            <div className="upload-section" onClick={() => photoInputRef.current.click()}>
-              <input
-                type="file"
-                ref={photoInputRef}
-                className="file-input"
-                accept="image/*"
-                onChange={handlePhotoChange}
-              />
-              <div className="upload-trigger">
-                <Camera size={24} />
-                <span>{athletePhoto ? 'Cambiar foto' : 'Subir tu foto de perfil'}</span>
+              <div className="form-group photo-upload-group">
+                <label>Foto de Perfil</label>
+                <div className="upload-section photo-upload-section" onClick={() => photoInputRef.current.click()}>
+                  <input
+                    type="file"
+                    ref={photoInputRef}
+                    className="file-input"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                  />
+                  <div className="upload-trigger">
+                    <Camera size={24} className="upload-icon-faded" />
+                    <span>{athletePhoto ? 'Cambiar foto' : 'Subir tu foto de perfil'}</span>
+                  </div>
+                </div>
+                
+                {previewUrl && (
+                  <div className="preview-container">
+                    <img src={previewUrl} alt="Vista previa" className="preview-image" />
+                  </div>
+                )}
               </div>
             </div>
-            
-            {previewUrl && (
-              <div className="preview-container">
-                <img src={previewUrl} alt="Vista previa" className="preview-image" />
-              </div>
-            )}
           </div>
         </div>
 

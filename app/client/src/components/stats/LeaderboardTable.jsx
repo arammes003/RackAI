@@ -20,7 +20,7 @@ export default function LeaderboardWidget() {
         const fetchIfNeeded = async (sex) => {
             if (cache[sex]) return cache[sex];
             
-            const response = await fetch(`http://localhost:8000/analytics/historical-leaderboard?sex=${sex}&limit=10`);
+            const response = await fetch(`http://localhost:8000/api/v1/analytics/historical-leaderboard?sex=${sex}&limit=10`);
             const data = await response.json();
             newCacheUpdates[sex] = data;
             hasUpdates = true;

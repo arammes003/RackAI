@@ -30,7 +30,7 @@ const Header = () => {
           <div className="user-section">
             <button className="upload-btn" onClick={() => setIsModalOpen(true)}>
               <Camera size={20} />
-              <span>Sube tu foto</span>
+              <span>Reclamar mi Perfil</span>
             </button>
           </div>
         </div>

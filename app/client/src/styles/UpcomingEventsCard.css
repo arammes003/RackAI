@@ -1,0 +1,186 @@
+/* Upcoming Events Card Styling */
+.upcoming-card {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  min-height: 24rem; /* Taller for better list view */
+}
+
+.upcoming-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.text-gray-400 {
+  color: var(--color-text-tertiary);
+}
+
+.upcoming-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding-right: 0.5rem;
+}
+
+.upcoming-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center; /* Ensures vertical centering */
+  padding: 2.5rem 1.5rem; /* Increased padding for better spacing */
+  border-bottom: 1px solid var(--color-border-light);
+  transition: background-color 0.2s ease;
+  min-height: 4.5rem; /* Ensure they don't get too small */
+}
+
+.upcoming-item:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.upcoming-item:last-child {
+  border-bottom: none;
+}
+
+/* Date Box Styles */
+.upcoming-date-box {
+  border-radius: 0.25rem; /* Sharp square */
+  width: 3.5rem; /* Fixed width */
+  height: 3.5rem; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /* Prevent shrinking */
+  font-family: "Oswald", sans-serif;
+}
+
+.upcoming-day {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.upcoming-month {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0.125rem;
+}
+
+.upcoming-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the text block */
+  gap: 0.25rem; /* Use gap instead of margins */
+}
+
+.upcoming-name {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  margin: 0; /* Remove margin to ensure perfect centering */
+}
+
+.upcoming-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+
+.federation-badge {
+  font-size: 0.65rem;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0; /* Sharp rectangle */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Federation Specific Styles - Stark Solid Colors */
+.upcoming-date-box.fed-epf {
+  background-color: #10b981; /* Stark Green */
+  color: white;
+  border-color: #10b981;
+}
+.upcoming-date-box.fed-ipf {
+  background-color: #fbbf24; /* Stark Gold */
+  color: #111827;
+  border-color: #fbbf24;
+}
+.upcoming-date-box.fed-aep {
+  background-color: #2563eb; /* Stark Blue */
+  color: white;
+  border-color: #2563eb;
+}
+
+/* Badge colors matching date box */
+.federation-badge.fed-epf {
+  background-color: #10b981;
+  color: white;
+}
+.federation-badge.fed-ipf {
+  background-color: #fbbf24;
+  color: #111827;
+}
+.federation-badge.fed-aep {
+  background-color: #2563eb;
+  color: white;
+}
+
+.location-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Empty State */
+.upcoming-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  height: 100%;
+}
+
+.empty-icon-wrapper {
+  background-color: var(--color-bg-tertiary);
+  padding: 1rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  color: var(--color-text-tertiary);
+}
+
+.upcoming-empty-state p {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.empty-subtitle {
+  font-size: 0.75rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* .upcoming-list::-webkit-scrollbar {
+  display: none;
+} */

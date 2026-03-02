@@ -1,16 +1,17 @@
 /* Leaderboard Widget Styling */
 .leaderboard-card {
     background-color: white;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-xl);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
     height: 100%;
     display: flex;
     flex-direction: column;
     /* Spans 2 cols by default match EvolutionChart behavior */
     grid-column: span 2; 
     min-height: 20rem;
+    transition: all var(--transition-fast);
 }
 
 @media (max-width: 1280px) {
@@ -34,9 +35,12 @@
 }
 
 .leaderboard-title {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-weight: 700;
-    color: #0f172a; /* slate-900 */
-    font-size: 1.125rem; /* lg */
+    color: #111827; /* slate-900 */
+    font-size: 1.25rem; /* lg */
 }
 
 .leaderboard-subtitle {
@@ -49,15 +53,19 @@
 .leaderboard-tabs {
     display: flex;
     padding: 0.25rem;
-    background-color: #f1f5f9; /* slate-100 */
-    border-radius: 0.75rem; /* xl */
+    background-color: #f3f4f6; /* slate-100 */
+    border-radius: var(--radius-md); 
+    border: 1px solid var(--color-border);
 }
 
 .leaderboard-tab {
-    padding: 0.375rem 1rem;
+    padding: 0.25rem 0.75rem;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-size: 0.75rem; /* xs */
     font-weight: 700;
-    border-radius: 0.5rem; /* lg */
+    border-radius: var(--radius-sm); /* lg */
     transition: all 0.2s;
     background: transparent;
     border: none;
@@ -66,25 +74,22 @@
 }
 
 .leaderboard-tab:hover {
-    color: #334155; /* slate-700 */
+    color: #111827; /* slate-700 */
 }
 
 .leaderboard-tab.active-mixed {
-    background-color: white;
-    color: #4f46e5; /* indigo-600 */
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background-color: #4f46e5; /* Indigo */
+    color: white;
 }
 
 .leaderboard-tab.active-male {
-    background-color: white;
-    color: #2563eb; /* blue-600 */
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background-color: #2563eb; /* Blue */
+    color: white;
 }
 
 .leaderboard-tab.active-female {
-    background-color: white;
-    color: #db2777; /* pink-600 */
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background-color: #db2777; /* Pink */
+    color: white;
 }
 
 /* Table Container */
@@ -94,7 +99,10 @@
     gap: 0.5rem;
     overflow-y: auto;
     flex: 1;
-    padding-right: 0.25rem;
+    padding-right: 0.5rem; /* Increased padding to prevent right edge cutting */
+    padding-bottom: 0.5rem;
+    padding-top: 0.25rem;
+    padding-left: 0.25rem;
 }
 
 /* Scrollbar styling for list */
@@ -121,13 +129,14 @@
 
 /* Header Styling */
 .leaderboard-table-header {
-    font-size: 10px; /* [10px] */
+    font-family: "Oswald", sans-serif;
+    font-size: 0.75rem;
     font-weight: 700;
     color: #94a3b8; /* slate-400 */
     text-transform: uppercase;
     letter-spacing: 0.05em; /* wider */
     padding: 0 1rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Column Alignment & Visibility */
@@ -182,31 +191,38 @@
 .leaderboard-row {
     font-size: 0.875rem; /* sm */
     padding: 0.75rem 1rem;
-    border-radius: 0.75rem; /* xl */
-    border: 1px solid transparent;
+    border-radius: var(--radius-md); /* sharp */
+    border: 1px solid var(--color-border);
     transition: all 0.2s;
     cursor: pointer;
     background-color: white;
+    margin-bottom: 0.25rem;
 }
 
 .leaderboard-row:hover {
-    border-color: #e2e8f0; /* slate-200 */
-    background-color: #f8fafc; /* slate-50 */
+    border-color: #111827; /* sleek dark hover */
+    transform: translateY(-2px); /* Elevar hacia arriba en lugar de ensanchar a los lados */
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra alta para dar sensación de más tamaño/cercanía */
+    position: relative; /* ensure it pops over adjacents */
+    z-index: 10;
 }
 
 .leaderboard-row.rank-1 {
-    background: linear-gradient(to right, rgba(254, 240, 138, 0.4), white); /* Gold / Yellow-200 */
-    border-color: #fde047; /* Yellow-300 */
+    background: white; 
+    border-left: 4px solid #fbbf24; /* Hard left border for #1 */
+    border-color: #fbbf24; 
 }
 
 .leaderboard-row.rank-2 {
-    background: linear-gradient(to right, rgba(226, 232, 240, 0.6), white); /* Silver / Slate-200 */
-    border-color: #cbd5e1; /* Slate-300 */
+    background: white;
+    border-left: 4px solid #94a3b8; /* Hard left border for #2 */
+    border-color: #94a3b8; /* Silver border to match left */
 }
 
 .leaderboard-row.rank-3 {
-    background: linear-gradient(to right, rgba(251, 211, 141, 0.3), white); /* Bronze / Orange-200ish */
-    border-color: #fdba74; /* Orange-300 */
+    background: white;
+    border-left: 4px solid #b45309; /* Hard left border for #3 */
+    border-color: #b45309; /* Bronze border to match left */
 }
 
 /* Rank Icon */
@@ -234,8 +250,8 @@
 }
 
 .athlete-avatar {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 9999px;
     background-color: #e2e8f0;
     display: flex;
@@ -250,10 +266,10 @@
 
 .gender-dot {
     position: absolute;
-    bottom: -0.125rem;
-    right: -0.125rem;
-    width: 0.75rem;
-    height: 0.75rem;
+    bottom: 0;
+    right: 0;
+    width: 0.875rem;
+    height: 0.875rem;
     border-radius: 9999px;
     border: 2px solid white;
 }
@@ -289,24 +305,26 @@
 
 /* Stats Styling */
 .stat-weight span {
-    background-color: #f1f5f9;
+    background-color: #e2e8f0; /* Darker gray background */
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
-    font-size: 10px;
-    font-weight: 500;
-    color: #64748b;
+    font-size: 0.70rem; /* Slightly larger */
+    font-weight: 700; /* Bolder */
+    color: #475569; /* Darker slate text */
 }
 
 .stat-sq, .stat-bp, .stat-dl {
-    font-size: 0.75rem;
-    color: #64748b;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    color: #475569;
     font-weight: 500;
 }
 
 .stat-total {
+    font-family: "Oswald", sans-serif;
     font-weight: 600;
-    color: #475569;
-    font-size: 0.75rem;
+    color: #111827;
+    font-size: 1.1rem;
 }
 
 .stat-total span {
@@ -317,15 +335,22 @@
 }
 
 .stat-gl-val {
-    font-weight: 900;
-    font-size: 0.875rem;
-    color: #334155;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111827;
 }
 
-.leaderboard-row.rank-1 .stat-gl-val,
-.leaderboard-row.rank-2 .stat-gl-val,
+.leaderboard-row.rank-1 .stat-gl-val {
+    color: #fbbf24;
+}
+
+.leaderboard-row.rank-2 .stat-gl-val {
+    color: #94a3b8;
+}
+
 .leaderboard-row.rank-3 .stat-gl-val {
-    color: #4f46e5;
+    color: #b45309;
 }
 
 /* Loader */
