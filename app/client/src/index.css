@@ -183,6 +183,35 @@ body {
     4px 4px 0px 0px rgba(31, 41, 55, 0.15);
   --shadow-card-hover:
     6px 6px 0px 0px rgba(31, 41, 55, 0.25);
+
+  --sidebar-bg-color: #111827;
+  --sidebar-active-color: #1f2937;
+}
+
+/* ===== DARK THEME VARIABLES ===== */
+[data-theme='dark'] {
+  --sidebar-bg-color: #1e293b;
+  --sidebar-active-color: #334155;
+
+  /* Dark Backgrounds */
+  --color-bg-primary: #111827;    /* Slate 900 - Main App Background */
+  --color-bg-secondary: #1e293b;  /* Slate 800 - Cards & Containers */
+  --color-bg-tertiary: #334155;   /* Slate 700 - Hover states, softer bg */
+  --color-bg-hover: #334155;
+  --color-bg-sidebar: #020617;    /* Slate 950 - Sidebar */
+
+  /* Light Text for dark backgrounds */
+  --color-text-primary: #ffffff;   /* Pure White - Main text */
+  --color-text-secondary: #f8fafc; /* Slate 50 - Subtitles */
+  --color-text-tertiary: #cbd5e1;  /* Slate 300 - Muted text */
+
+  /* Darker Borders */
+  --color-border: #334155;        /* Slate 700 - Standard border */
+  --color-border-light: #475569;  /* Slate 600 - Lighter border */
+
+  /* Shadows for Dark Mode: more subtle and using a dark slate/black base */
+  --shadow-card: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 6px 6px 0px 0px rgba(0, 0, 0, 0.7);
 }
 
 /* ===== GLOBAL STYLES ===== */
@@ -190,6 +219,28 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   line-height: 1.6;
+  position: relative;
+}
+
+/* Hardcore Industrial Noise Texture Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  /* Fractured SVG noise generated purely in CSS/SVG string */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03; /* Barely visible, tactical */
+}
+
+/* Subtle bump in opacity for dark mode because black swallows the noise more */
+[data-theme='dark'] body::after {
+  opacity: 0.04;
+  mix-blend-mode: overlay;
 }
 
 #root {

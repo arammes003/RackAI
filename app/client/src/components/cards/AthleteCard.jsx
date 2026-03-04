@@ -1,4 +1,4 @@
-import '../styles/Athletes.css';
+import '../../styles/Athletes.css';
 
 const AthleteCard = ({ athlete, selected, onClick }) => {
   return (

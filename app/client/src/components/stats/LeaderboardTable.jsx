@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Trophy, Medal, User, Crown, Loader2 } from 'lucide-react';
-import './LeaderboardTable.css'; // Component specific styles
+import '../../styles/LeaderboardTable.css'; // Component specific styles
 
 export default function LeaderboardWidget() {
   const [filter, setFilter] = useState('mixed'); // 'mixed', 'M', 'F'
@@ -134,71 +134,73 @@ export default function LeaderboardWidget() {
             <Loader2 className="animate-spin" size={64} />
           </div>
         ) : (
-          filteredData.map((athlete, index) => (
-          <div 
-            key={athlete.id} 
-            className={`leaderboard-row ${index === 0 ? 'rank-1' : ''} ${index === 1 ? 'rank-2' : ''} ${index === 2 ? 'rank-3' : ''}`}
-          >
-            {/* 1. Ranking */}
-            <div className="rank-container">
-              {getRankIcon(index)}
-            </div>
+          <div className="leaderboard-row-container">
+            {filteredData.map((athlete, index) => (
+            <div 
+              key={athlete.id} 
+              className={`leaderboard-row ${index === 0 ? 'rank-1' : ''} ${index === 1 ? 'rank-2' : ''} ${index === 2 ? 'rank-3' : ''}`}
+            >
+              {/* 1. Ranking */}
+              <div className="rank-container">
+                {getRankIcon(index)}
+              </div>
 
-            {/* 2. Perfil */}
-            <div className="athlete-profile">
-              <div className="athlete-avatar-container">
-                <div className="athlete-avatar">
-                  {athlete.image ? (
-                    <img 
-                      src={athlete.image} 
-                      alt={athlete.name} 
-                      style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}}
-                    />
-                  ) : (
-                    <User size={16} className="icon-user" />
+              {/* 2. Perfil */}
+              <div className="athlete-profile">
+                <div className="athlete-avatar-container">
+                  <div className="athlete-avatar">
+                    {athlete.image ? (
+                      <img 
+                        src={athlete.image} 
+                        alt={athlete.name} 
+                        style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}}
+                      />
+                    ) : (
+                      <User size={16} className="icon-user" />
+                    )}
+                  </div>
+                  {/* Indicador de sexo (Solo en modo Mixto) */}
+                  {filter === 'mixed' && (
+                    <div className={`gender-dot ${athlete.gender === 'M' ? 'male' : 'female'}`}></div>
                   )}
                 </div>
-                {/* Indicador de sexo (Solo en modo Mixto) */}
-                {filter === 'mixed' && (
-                  <div className={`gender-dot ${athlete.gender === 'M' ? 'male' : 'female'}`}></div>
-                )}
+                
+                <div className="athlete-info">
+                  <span className="athlete-name">
+                    {athlete.name}
+                  </span>
+                  <span className="athlete-club">{athlete.club}</span>
+                </div>
+              </div>
+
+              {/* 3. Datos */}
+              <div className="stat-weight">
+                <span>{athlete.cat}</span>
+              </div>
+
+              <div className="stat-sq">
+                {athlete.sq}
+              </div>
+              <div className="stat-bp">
+                {athlete.bp}
+              </div>
+              <div className="stat-dl">
+                {athlete.dl}
               </div>
               
-              <div className="athlete-info">
-                <span className="athlete-name">
-                  {athlete.name}
-                </span>
-                <span className="athlete-club">{athlete.club}</span>
+              <div className="stat-total">
+                {athlete.total}
               </div>
-            </div>
 
-            {/* 3. Datos */}
-            <div className="stat-weight">
-              <span>{athlete.cat}</span>
-            </div>
+              <div className="stat-gl">
+                <span className="stat-gl-val">
+                  {athlete.gl}
+                </span>
+              </div>
 
-            <div className="stat-sq">
-              {athlete.sq}
             </div>
-            <div className="stat-bp">
-              {athlete.bp}
-            </div>
-            <div className="stat-dl">
-              {athlete.dl}
-            </div>
-            
-            <div className="stat-total">
-              {athlete.total}
-            </div>
-
-            <div className="stat-gl">
-              <span className="stat-gl-val">
-                {athlete.gl}
-              </span>
-            </div>
-
+          ))}
           </div>
-        ))
         )}
       </div>
     </div>

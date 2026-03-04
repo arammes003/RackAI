@@ -1,7 +1,7 @@
 .dashboard-layout {
   display: flex;
   height: 100vh;
-  background-color: #F1F5F9;
+  background-color: var(--color-bg-primary);
   font-family: var(--font-sans, sans-serif);
   transition: background-color 0.3s;
 }
@@ -30,13 +30,4 @@
 
 .dashboard-main-content {
   height: 100%; /* Ensure full height is passed down */
-}
-
-/* Dark mode utility */
-.dark .dashboard-layout {
-  background-color: #0f172a;
-}
-
-.dark .dashboard-main {
-  background-color: #1e293b;
 }

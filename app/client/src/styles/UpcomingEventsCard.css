@@ -6,6 +6,10 @@
   overflow: hidden;
   height: 100%;
   min-height: 24rem; /* Taller for better list view */
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
 }
 
 .upcoming-card-header {
@@ -49,7 +53,7 @@
 
 /* Date Box Styles */
 .upcoming-date-box {
-  border-radius: 0.25rem; /* Sharp square */
+  border-radius: 0; /* Sharp polygon, no curves */
   width: 3.5rem; /* Fixed width */
   height: 3.5rem; /* Fixed height */
   display: flex;
@@ -58,6 +62,7 @@
   align-items: center;
   flex-shrink: 0; /* Prevent shrinking */
   font-family: "Oswald", sans-serif;
+  /* clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%, 0 25%); Top-left cut */
 }
 
 .upcoming-day {
@@ -88,9 +93,9 @@
   letter-spacing: 0.02em;
   font-size: 1rem;
   font-weight: 700;
-  color: #111827;
-  line-height: 1.2;
-  margin: 0; /* Remove margin to ensure perfect centering */
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.1;
 }
 
 .upcoming-details {
@@ -102,11 +107,11 @@
 }
 
 .federation-badge {
+  border-radius: 0.25rem;
   font-size: 0.65rem;
   font-family: "Oswald", sans-serif;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
-  border-radius: 0; /* Sharp rectangle */
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -147,7 +152,7 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-tertiary);
   font-weight: 500;
 }
 
@@ -179,6 +184,8 @@
 .empty-subtitle {
   font-size: 0.75rem;
 }
+
+
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 /* .upcoming-list::-webkit-scrollbar {

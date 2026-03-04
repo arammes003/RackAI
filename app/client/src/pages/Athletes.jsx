@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Athletes.css';
-import '../styles/Home.css';
-import AthleteCard from '../components/AthleteCard';
+import AthleteCard from '../components/cards/AthleteCard';
 import PageLayout from '../layouts/PageLayout';
 
 const Athletes = () => {

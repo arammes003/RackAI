@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/Home.css';
+import '../../styles/HighlightCard.css';
 
 const HighlightCard = () => {
   const [highlights, setHighlights] = useState([]);
@@ -111,7 +111,10 @@ const HighlightCard = () => {
           <h3 className="highlight-card-name" style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'}}>
             {current.athleteName}
           </h3>
-          <span className="highlight-card-category">{current.title} • {current.federation}</span>
+          <span className="highlight-card-category">
+            <span className="highlight-card-category-name" title={current.category}>{current.category}</span>
+            <span className="highlight-card-federation">&nbsp;• {current.federation}</span>
+          </span>
         </div>
         
         <div className="highlight-card-image-container">

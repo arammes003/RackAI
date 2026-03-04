@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
+import '../../styles/EvolutionChart.css';
 
 const EvolutionChart = () => {
     // --- ESTADOS ---

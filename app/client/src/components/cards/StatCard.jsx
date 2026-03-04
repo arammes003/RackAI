@@ -1,18 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import ReactECharts from 'echarts-for-react';
-import '../../styles/Home.css';
+import '../../styles/StatCard.css';
 
 const StatCard = ({ title, value, trend, subtitle, icon: Icon, chartOption, color, positiveGreen, loading }) => {
   const chartRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // ResizeObserver to handle container size changes (e.g. menu collapse)
+    let resizeTimer;
     const resizeObserver = new ResizeObserver(() => {
-        if (chartRef.current) {
-            const chartInstance = chartRef.current.getEchartsInstance();
-            chartInstance.resize();
-        }
+        clearTimeout(resizeTimer);
+        // Esperamos a que la transición CSS de 300ms termine para recalcular un renderizado nítido
+        resizeTimer = setTimeout(() => {
+            if (chartRef.current) {
+                const chartInstance = chartRef.current.getEchartsInstance();
+                chartInstance.resize({ animation: { duration: 0 } });
+            }
+        }, 320); 
     });
 
     if (containerRef.current) {
@@ -20,9 +24,8 @@ const StatCard = ({ title, value, trend, subtitle, icon: Icon, chartOption, colo
     }
 
     return () => {
-        if (containerRef.current) {
-            resizeObserver.unobserve(containerRef.current);
-        }
+        clearTimeout(resizeTimer);
+        if (containerRef.current) containerRef.current && resizeObserver.unobserve(containerRef.current);
     };
   }, []);
 

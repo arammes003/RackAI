@@ -1,0 +1,102 @@
+/* Stat Card Styling */
+.stat-card {
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-light);
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-card-title {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+}
+
+.stat-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100px;
+  transition: all var(--transition-fast);
+}
+
+.stat-card-value-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.stat-card-main-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-card-value {
+  font-family: "Oswald", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.stat-card-trend {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.stat-card-trend.positive {
+  background-color: #cffafe; /* Cyan 100 */
+  color: #0891b2; /* Cyan 600 */
+}
+
+.stat-card-trend.positive-green {
+  background-color: #d1fae5; /* Emerald 100 */
+  color: #059669; /* Emerald 600 */
+}
+
+.stat-card-trend.negative {
+  background-color: #fee2e2; /* Red 100 */
+  color: #dc2626; /* Red 600 */
+}
+
+.stat-card-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.stat-card-chart {
+  flex: 1;
+  height: 80px;
+  max-width: 50%;
+  display: flex;
+  align-items: flex-end;
+  transition: all var(--transition-fast);
+}

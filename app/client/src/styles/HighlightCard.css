@@ -1,0 +1,161 @@
+/* Highlight Card Styling */
+.highlight-card {
+  background-color: #111827; /* Dark base */
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 4px 4px 0px 0px #fbbf24; /* Solid gold geometric shadow */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  height: 11rem;
+  overflow: hidden; /* Fixes background bleeding out of corners */
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.highlight-card:hover {
+  transform: translateY(-2px) translateX(-2px);
+  box-shadow: 6px 6px 0px 0px #fbbf24; /* Harder gold shadow on hover */
+}
+
+/* 
+  Use a pseudo-element for the gradient fade on top of the image.
+  We fade from the dark background color (#111827) on the left
+  to transparent on the right, blending the photo perfectly. 
+*/
+.highlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, #111827 0%, #111827 40%, rgba(17, 24, 39, 0.6) 65%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.highlight-card-header {
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 3;
+}
+
+.highlight-card-badge {
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #111827;
+  background-color: #fbbf24; /* Amber badge */
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.highlight-card-content {
+  display: flex;
+  justify-content: flex-start; /* Stack items horizontally */
+  align-items: center;
+  height: 100%;
+  /* Removed position: relative so absolute child anchors to highlight-card */
+}
+
+.highlight-card-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 55%; /* Constrain text to left 55% */
+  z-index: 2;
+  position: relative;
+  padding-right: 1rem;
+}
+
+.highlight-card-stats {
+  font-family: "Oswald", sans-serif;
+  font-size: 2.75rem;
+  color: white;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.highlight-card-name {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  color: #f3f4f6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.highlight-card-category {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.highlight-card-category-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1; /* Allows this part to truncate */
+}
+
+.highlight-card-federation {
+  white-space: nowrap;
+  flex-shrink: 0; /* Prevents federation from truncating */
+}
+
+.highlight-card-image-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%; /* Image takes right 50% */
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Gradient Mask to fade the image into the dark background */
+.highlight-card-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, #111827 0%, rgba(17,24,39,0.3) 60%, transparent 100%);
+  z-index: 2;
+}
+
+.highlight-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%; /* Keep heads in view */
+  filter: grayscale(80%) contrast(1.1);
+  opacity: 1;
+  mask-image: linear-gradient(to left, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+}
+
+@media (min-width: 1921px) {
+  .highlight-card-image {
+    width:60%; /* Haz la imagen más corta (menos ancha) */
+    margin-left: auto; /* Mantenla alineada a la derecha */
+    display: block;
+  }
+}
