@@ -75,15 +75,13 @@ const HighlightCard = () => {
   if (loading) return (
     <div className="highlight-card">
         <div className="highlight-card-header">
-            <span className="highlight-card-badge">CARGANDO...</span>
+            <div className="skeleton animate-pulse rounded" style={{width: '8rem', height: '1.25rem'}}></div>
         </div>
         <div className="highlight-card-content">
-            <div className="animate-pulse flex-1 space-y-4 py-1 w-full justify-end flex flex-col mt-4">
-                <div className="h-8 bg-slate-700 rounded w-1/2"></div>
-                <div className="space-y-2">
-                    <div className="h-4 bg-slate-700 rounded w-3/4"></div>
-                    <div className="h-3 bg-slate-700 rounded w-1/4"></div>
-                </div>
+            <div className="highlight-card-info" style={{gap: '0.5rem'}}>
+                <div className="skeleton animate-pulse rounded" style={{width: '60%', height: '2.5rem'}}></div>
+                <div className="skeleton animate-pulse rounded" style={{width: '80%', height: '1rem'}}></div>
+                <div className="skeleton animate-pulse rounded" style={{width: '50%', height: '0.75rem'}}></div>
             </div>
         </div>
     </div>

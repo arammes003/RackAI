@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Trophy, Medal, User, Crown, Loader2 } from 'lucide-react';
+import { Trophy, Medal, User, Crown } from 'lucide-react';
 import '../../styles/LeaderboardTable.css'; // Component specific styles
 
 export default function LeaderboardWidget() {
@@ -130,8 +130,30 @@ export default function LeaderboardWidget() {
 
         {/* Lista de Filas */}
         {loading ? (
-          <div className="leaderboard-loader">
-            <Loader2 className="animate-spin" size={64} />
+          <div className="leaderboard-row-container">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="leaderboard-row animate-pulse">
+                {/* Rank */}
+                <div className="rank-container">
+                  <div className="skeleton rounded" style={{width: '1.5rem', height: '1.5rem'}}></div>
+                </div>
+                {/* Profile */}
+                <div className="athlete-profile">
+                  <div className="skeleton rounded-full" style={{width: '3rem', height: '3rem', borderRadius: '9999px', flexShrink: 0}}></div>
+                  <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem'}}>
+                    <div className="skeleton rounded" style={{width: '70%', height: '0.9rem'}}></div>
+                    <div className="skeleton rounded" style={{width: '40%', height: '0.65rem'}}></div>
+                  </div>
+                </div>
+                {/* Data columns (hidden on mobile, visible on desktop via grid) */}
+                <div className="stat-weight"><div className="skeleton rounded" style={{width: '2.5rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+                <div className="stat-sq"><div className="skeleton rounded" style={{width: '2.5rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+                <div className="stat-bp"><div className="skeleton rounded" style={{width: '2.5rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+                <div className="stat-dl"><div className="skeleton rounded" style={{width: '2.5rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+                <div className="stat-total"><div className="skeleton rounded" style={{width: '3rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+                <div className="stat-gl"><div className="skeleton rounded" style={{width: '2.5rem', height: '0.85rem', margin: '0 auto'}}></div></div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="leaderboard-row-container">
