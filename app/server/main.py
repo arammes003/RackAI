@@ -4,7 +4,6 @@ import uvicorn
 from fastapi import FastAPI, Query, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from src.infrastructure.repositories.dashboard_analytics import DashboardAnalytics
 from rapidfuzz import fuzz
 import os
 
