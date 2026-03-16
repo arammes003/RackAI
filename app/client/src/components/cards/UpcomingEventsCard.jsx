@@ -79,11 +79,22 @@ const UpcomingEventsCard = () => {
     );
   }
 
-  // Vista de error por si falla la API
   if (error) {
      return (
-        <div className="stat-card upcoming-card flex items-center justify-center p-6 text-red-400">
-           {error}
+        <div className="stat-card upcoming-card">
+          <div className="upcoming-card-header">
+            <span className="stat-card-title">Próximas Competiciones</span>
+            <Calendar className="text-gray-400" size={20} />
+          </div>
+          <div className="upcoming-list">
+            <div className="upcoming-empty-state">
+              <div className="empty-icon-wrapper">
+                <Calendar size={24} />
+              </div>
+              <p>{error}</p>
+              <span className="empty-subtitle">Inténtalo de nuevo más tarde</span>
+            </div>
+          </div>
         </div>
      );
   }

@@ -88,7 +88,23 @@ const HighlightCard = () => {
     </div>
   );
 
-  if (highlights.length === 0) return null;
+  if (highlights.length === 0) return (
+    <div className="highlight-card">
+      <div className="highlight-card-header">
+        <span className="highlight-card-badge">Destacados del Mes</span>
+      </div>
+      <div className="highlight-card-content" style={{justifyContent: 'center'}}>
+        <div className="highlight-card-info" style={{width: '100%', alignItems: 'center', textAlign: 'center'}}>
+          <p style={{fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500}}>
+            Sin datos disponibles
+          </p>
+          <span style={{fontSize: '0.75rem', color: '#6b7280'}}>
+            Los destacados aparecerán cuando haya competiciones recientes
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 
   const current = highlights[currentIndex];
 
