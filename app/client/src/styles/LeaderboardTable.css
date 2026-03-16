@@ -197,6 +197,7 @@
         /* Rank | Athlete | Cat | SQ | BP | DL | Total | GL */
         /* Increased widths to prevent header wrapping */
         grid-template-columns: 3rem 2fr 5rem 6rem 6rem 6rem 6.5rem 5rem;
+        cursor: pointer;
     }
 
     .col-weight, .stat-weight,
@@ -312,6 +313,15 @@
 
 .leaderboard-row:hover .athlete-name {
     color: #4f46e5;
+}
+
+/* Ensure correct contrast in dark mode */
+[data-theme='dark'] .athlete-name {
+    color: #ffffff;
+}
+
+[data-theme='dark'] .leaderboard-row:hover .athlete-name {
+    color: #a5b4fc; /* Indigo 300 for readable hover */
 }
 
 .athlete-club {

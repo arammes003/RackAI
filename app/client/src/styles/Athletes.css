@@ -11,6 +11,330 @@
   margin-left: var(--spacing-xs);
 }
 
+/* Grid de atletas */
+.athletes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* Toolbar / filtros */
+.athletes-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.athletes-toolbar-left,
+.athletes-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.athletes-results {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  color: #111827;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.filter-btn.secondary {
+  color: #4b5563;
+}
+
+.filters-panel {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.filters-panel.sort-panel {
+  padding: 0.85rem 1rem;
+}
+
+.sort-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.filter-field span {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-tertiary);
+  font-weight: 700;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background: white;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25);
+}
+
+@media (max-width: 1024px) {
+  .filters-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .athletes-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .athletes-toolbar-left,
+  .athletes-toolbar-right {
+    justify-content: space-between;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1440px) {
+  .athletes-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .athletes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .athletes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tarjeta de atleta */
+.athlete-card {
+  position: relative;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+.athlete-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-light);
+}
+
+.athlete-card.selected {
+  box-shadow: 0 0 0 1px #fbbf24, 0 18px 40px rgba(15, 23, 42, 0.25);
+  border-color: #fbbf24;
+}
+
+/* Badge de GL arriba a la izquierda */
+.gl-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  background: #0f172a;
+  color: #f9fafb;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.gl-badge span {
+  font-size: 0.65rem;
+  color: #9ca3af;
+}
+
+/* Imagen / avatar */
+.athlete-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.athlete-image-container img {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid #fbbf24;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+}
+
+.athlete-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 20%, #facc15, #f97316 45%, #1f2937 100%);
+  color: #e5e7eb;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+}
+
+.athlete-placeholder svg {
+  opacity: 0.9;
+}
+
+/* Nombre y categoría */
+.athlete-name {
+  margin: 0.25rem 0 0.1rem;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.athlete-category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.athlete-category span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.athlete-category span:first-child {
+  font-size: 1rem;
+}
+
+/* Grid de stats */
+.athlete-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.stat-item {
+  background-color: rgba(15, 23, 42, 0.02);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.stat-label {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.stat-value {
+  font-family: "Oswald", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Total */
+.athlete-total {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.athlete-total span:first-of-type {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.athlete-total > span:last-child {
+  font-size: 0.7rem;
+}
+
 .total-label {
   font-size: 0.75rem;
   color: #94a3b8;
@@ -27,6 +351,7 @@
   margin-top: 2.5rem;
   padding: 1rem 0;
   border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
 }
 
 .pagination-btn {
@@ -57,4 +382,41 @@
   font-size: 0.875rem;
   color: #6b7280;
   font-weight: 500;
+}
+
+.pagination-per-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+}
+
+.pagination-per-page-label {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pagination-select {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+  padding: 0.45rem 0.6rem;
+  background: white;
+  color: #0f172a;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.pagination-select:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25);
 }

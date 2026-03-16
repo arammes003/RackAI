@@ -654,6 +654,63 @@ class HomeRepository:
         df = df.astype(object).where(pd.notnull(df), None)
         return df.to_dict(orient="records")
 
+    def get_all_clubs(self, limit: int = 20, q: str | None = None):
+        """
+        Devuelve una lista de clubes (si existe el campo `club` en `fact_results`).
+        Si el schema no contiene esa columna, devuelve [].
+        """
+        try:
+            with self.engine.connect() as conn:
+                has_col = conn.execute(
+                    text(
+                        """
+                        SELECT 1
+                        FROM information_schema.columns
+                        WHERE table_schema = 'public'
+                          AND table_name = 'fact_results'
+                          AND column_name = 'club'
+                        LIMIT 1;
+                        """
+                    )
+                ).fetchone()
+
+            if not has_col:
+                return []
+
+            where = ""
+            params = {"limit": limit}
+            if q:
+                where = "WHERE club ILIKE :q"
+                params["q"] = f"%{q}%"
+
+            query = text(
+                f"""
+                SELECT DISTINCT club
+                FROM fact_results
+                {where}
+                AND club IS NOT NULL
+                AND club <> ''
+                ORDER BY club ASC
+                LIMIT :limit;
+                """
+                if where
+                else """
+                SELECT DISTINCT club
+                FROM fact_results
+                WHERE club IS NOT NULL
+                AND club <> ''
+                ORDER BY club ASC
+                LIMIT :limit;
+                """
+            )
+
+            df = pd.read_sql(query, self.engine, params=params)
+            df = df.astype(object).where(pd.notnull(df), None)
+            return [{"name": r.get("club")} for r in df.to_dict(orient="records") if r.get("club")]
+        except Exception as e:
+            print(f"❌ Error al obtener clubes: {e}")
+            return []
+
 
 # ------------------------------
 # Ejemplo de uso

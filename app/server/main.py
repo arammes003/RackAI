@@ -231,6 +231,15 @@ def get_all_athletes():
     repo = home_repository.HomeRepository()
     return repo.get_all_athletes()
 
+@app.get(f"{API_PATH}/clubs")
+def get_all_clubs(
+    q: str | None = Query(default=None),
+    limit: int = Query(10, ge=1, le=50),
+):
+    """Devuelve listado de clubes para el buscador (si están disponibles)."""
+    repo = home_repository.HomeRepository()
+    return repo.get_all_clubs(limit=limit, q=q)
+
 
 """
     HOME ENDPOINTS
