@@ -1,13 +1,20 @@
+import src.infrastructure.repositories.athlete_repository as athlete_repository
 import src.infrastructure.repositories.home_repository as home_repository
 import uvicorn
 from fastapi import FastAPI, Query, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from src.infrastructure.repositories.dashboard_analytics import DashboardAnalytics
-import easyocr
 from rapidfuzz import fuzz
-import numpy as np
-import cv2
 import os
+
+# --- Conditional heavy imports (too large for Vercel serverless) ---
+IS_VERCEL = os.environ.get("VERCEL") == "1"
+
+if not IS_VERCEL:
+    import easyocr
+    import numpy as np
+    import cv2
 
 app = FastAPI()
 
@@ -47,6 +54,10 @@ app.add_middleware(
 """
     UPLOAD PHOTO
 """
+
+API_BASE_PATH = "/api"
+API_VERSION = "/v1"
+API_PATH = API_BASE_PATH + API_VERSION
 
 
 def preprocess_image_smart(image_bytes):
@@ -106,10 +117,15 @@ def clean_ocr_text(text):
     return text
 
 
-@app.post("/api/verify-id")
+@app.post(f"{API_PATH}/verify-id")
 async def verify_identity(
     dni_image: UploadFile = File(...), athlete_name: str = Form(...)
 ):
+    if IS_VERCEL:
+        return JSONResponse(
+            status_code=501,
+            content={"verified": False, "msg": "OCR verification is not available on Vercel (model too large for serverless)."}
+        )
     reader = easyocr.Reader(["es"], gpu=True)  # Pon True si tienes GPU NVIDIA
     print(f"🕵️‍♂️ Verificando a: {athlete_name}")
 
@@ -177,7 +193,7 @@ async def verify_identity(
         return {"verified": False, "msg": "Error en servidor"}
 
 
-@app.post("/api/upload-profile-picture")
+@app.post(f"{API_PATH}/upload-profile-picture")
 async def upload_profile_picture(
     athlete_id: str = Form(...), file: UploadFile = File(...)
 ):
@@ -210,7 +226,7 @@ async def upload_profile_picture(
         return {"status": "error", "message": str(e)}
 
 
-@app.get("/api/athletes")
+@app.get(f"{API_PATH}/athletes")
 def get_all_athletes():
     """Devuelve listado de todos los atletas para el buscador."""
     repo = home_repository.HomeRepository()
@@ -222,21 +238,42 @@ def get_all_athletes():
 """
 
 
-@app.get("/analytics/athletes-per-year")
+@app.get(f"{API_PATH}/analytics/athletes-per-period")
+def athletes_per_period():
+    """Returns the KPI card data for athletes per period."""
+    repo = home_repository.HomeRepository()
+    return repo.get_unique_athletes_per_period()
+
+
+@app.get(f"{API_PATH}/analytics/athletes-per-year")
 def athletes_per_year():
     """Returns summar cards for Home."""
     repo = home_repository.HomeRepository()
     return repo.get_unique_athletes_per_year()
 
 
-@app.get("/analytics/competitions-per-year")
+@app.get(f"{API_PATH}/analytics/athletes-stats")
+def athletes_stats():
+    """Returns YTD and monthly athlete stats for Home."""
+    repo = home_repository.HomeRepository()
+    return repo.get_athletes_ytd_stats()
+
+
+@app.get(f"{API_PATH}/analytics/competitions-per-year")
 def competitions_per_year():
     """Returns summar cards for Home."""
     repo = home_repository.HomeRepository()
     return repo.get_competitions_per_year()
 
 
-@app.get("/analytics/historical-leaderboard")
+@app.get(f"{API_PATH}/analytics/average-for-event")
+def average_for_event():
+    """Returns average number of athletes per event."""
+    repo = home_repository.HomeRepository()
+    return repo.get_average_for_event()
+
+
+@app.get(f"{API_PATH}/analytics/historical-leaderboard")
 def historical_leaderboard(
     sex: str = Query("M"),
     limit: int = Query(10),
@@ -249,7 +286,7 @@ def historical_leaderboard(
     return repo.get_historical_leaderboard(sex, limit=limit)
 
 
-@app.get("/analytics/monthly-top5-general")
+@app.get(f"{API_PATH}/analytics/monthly-top5-general")
 def monthly_top5_general():
     """
     Devuelve el Top 5 mensual de cada disciplina (Squat, Bench, Deadlift, Total, GL)
@@ -259,7 +296,28 @@ def monthly_top5_general():
     return repo.get_monthly_top_5_general()
 
 
+@app.get(f"{API_PATH}/analytics/upcoming-competitions")
+def upcoming_competitions():
+    """
+    Devuelve una lista de las próximas competiciones ordenadas por fecha.
+    """
+    repo = home_repository.HomeRepository()
+    return repo.get_upcoming_competitions()
+
+
+"""
+    ATLETAS
+"""
+
+
+@app.get(f"{API_PATH}/athletes_profiles")
+def get_athletes_profiles():
+    """Devuelve listado de todos los atletas para el buscador."""
+    repo = athlete_repository.AthleteRepository()
+    return repo.get_athletes_with_prs()
+
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
-    # uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)  # DEV
-    uvicorn.run("main:app", host="0.0.0.0", port=port)  # PROD
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)  # DEV
+    # uvicorn.run("main:app", host="0.0.0.0", port=port)  # PROD

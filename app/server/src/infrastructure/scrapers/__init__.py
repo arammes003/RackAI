@@ -1,0 +1,1 @@
+from .upcoming_scraper import UpcomingCompetitionScraper

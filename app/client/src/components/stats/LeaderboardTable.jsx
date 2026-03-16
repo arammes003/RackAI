@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Trophy, Medal, User, Crown } from 'lucide-react';
+import { API_URL } from '../../config/api';
 import '../../styles/LeaderboardTable.css'; // Component specific styles
 
 export default function LeaderboardWidget() {
@@ -20,7 +21,7 @@ export default function LeaderboardWidget() {
         const fetchIfNeeded = async (sex) => {
             if (cache[sex]) return cache[sex];
             
-            const response = await fetch(`http://localhost:8000/api/v1/analytics/historical-leaderboard?sex=${sex}&limit=10`);
+            const response = await fetch(`${API_URL}/analytics/historical-leaderboard?sex=${sex}&limit=10`);
             const data = await response.json();
             newCacheUpdates[sex] = data;
             hasUpdates = true;

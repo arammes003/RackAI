@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { API_URL } from '../../config/api';
 import "../../styles/UpcomingEventsCard.css";
 import { Calendar, MapPin, Trophy } from "lucide-react";
 
-const UpcomingEventsCard = ({ events, loading }) => {
+const UpcomingEventsCard = () => {
+  // 1. Añadimos el estado local
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 2. Añadimos el fetch en un useEffect
+  useEffect(() => {
+    const fetchUpcomingEvents = async () => {
+      try {
+        const response = await fetch(`${API_URL}/analytics/upcoming-competitions?limit=5`);
+        if (!response.ok) {
+          throw new Error('Error al cargar competiciones');
+        }
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        console.error("Error fetching upcoming events:", err);
+        setError("No se pudieron cargar los eventos.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUpcomingEvents();
+  }, []);
+
   // Helper to format date
   const formatDate = (dateString, type) => {
     if (!dateString) return "";
@@ -23,6 +50,7 @@ const UpcomingEventsCard = ({ events, loading }) => {
     return "fed-aep"; // Default
   };
 
+  // 3. Modificamos la vista de carga para que use nuestro estado local
   if (loading) {
     return (
       <div className="stat-card upcoming-card">
@@ -49,6 +77,15 @@ const UpcomingEventsCard = ({ events, loading }) => {
         </div>
       </div>
     );
+  }
+
+  // Vista de error por si falla la API
+  if (error) {
+     return (
+        <div className="stat-card upcoming-card flex items-center justify-center p-6 text-red-400">
+           {error}
+        </div>
+     );
   }
 
   return (

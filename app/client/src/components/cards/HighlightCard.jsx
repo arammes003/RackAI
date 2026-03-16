@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../../config/api';
 import '../../styles/HighlightCard.css';
 
 const HighlightCard = () => {
@@ -10,7 +11,7 @@ const HighlightCard = () => {
   useEffect(() => {
     const fetchHighlights = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/analytics/monthly-top5-general');
+        const response = await fetch(`${API_URL}/analytics/monthly-top5-general`);
         if (response.ok) {
           const rawData = await response.json();
           if (rawData && rawData.length > 0) {
@@ -120,6 +121,8 @@ const HighlightCard = () => {
             src={current.imageUrl || `https://ui-avatars.com/api/?name=${current.athleteName}&background=fbbf24&color=111827&size=128`} 
             alt={current.athleteName} 
             className="highlight-card-image" 
+            fetchPriority='high'
+            loading='eager'
           />
         </div>
       </div>

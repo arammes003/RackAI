@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 import '../styles/Athletes.css';
 import AthleteCard from '../components/cards/AthleteCard';
 import PageLayout from '../layouts/PageLayout';
@@ -15,7 +16,7 @@ const Athletes = () => {
   useEffect(() => {
     const fetchAthletes = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/athletes_profiles');
+        const response = await fetch(`${API_URL}/athletes_profiles`);
         let data = await response.json();
         
         data = data.map(athlete => {

@@ -62,7 +62,7 @@ const StatCard = ({ title, value, trend, subtitle, icon: Icon, chartOption, colo
                 <span className="stat-card-value">{value}</span>
                 {trend && (
                     <span className={`stat-card-trend ${trend > 0 ? (positiveGreen ? 'positive-green' : 'positive') : 'negative'}`}>
-                    {trend > 0 ? '+' : ''}{trend}
+                    {trend > 0 ? '+' : ''}{trend}%
                     </span>
                 )}
             </div>

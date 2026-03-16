@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
+import { API_URL } from '../../config/api';
 import '../../styles/EvolutionChart.css';
 
 const EvolutionChart = () => {
@@ -23,7 +24,7 @@ const EvolutionChart = () => {
                 const sexParam = activeSex === 'Masculino' ? 'M' : 'F';
                 
                 const response = await fetch(
-                    `http://localhost:8000/analytics/year-max-totals?sex=${sexParam}&category=${activeAgeCategory}`
+                    `${API_URL}/../analytics/year-max-totals?sex=${sexParam}&category=${activeAgeCategory}`
                 );
                 
                 if (!response.ok) throw new Error('Error en la API');

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Search, Upload, Camera, Check, AlertCircle, Loader } from 'lucide-react';
+import { API_URL } from '../config/api';
 import '../styles/ProfileUploadModal.css';
 
 const ProfileUploadModal = ({ isOpen, onClose }) => {
@@ -43,7 +44,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
         formData.append('athlete_id', selectedAthlete.athlete_id);
         formData.append('file', athletePhoto);
         
-        const response = await fetch('http://localhost:8000/api/v1/upload-profile-picture', {
+        const response = await fetch(`${API_URL}/upload-profile-picture`, {
             method: 'POST',
             body: formData
         });
@@ -74,7 +75,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen) {
-        fetch('http://localhost:8000/api/v1/athletes')
+        fetch(`${API_URL}/athletes`)
             .then(res => res.json())
             .then(data => setAllAthletes(data))
             .catch(err => console.error("Error loading athletes:", err));
@@ -135,7 +136,7 @@ const ProfileUploadModal = ({ isOpen, onClose }) => {
 
     try {
       // Assuming the backend is running on localhost:8000 based on main.py
-      const response = await fetch('http://localhost:8000/api/v1/verify-id', {
+      const response = await fetch(`${API_URL}/verify-id`, {
         method: 'POST',
         body: formData,
       });
