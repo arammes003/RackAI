@@ -57,23 +57,43 @@ const AvgAthletesPerPeriodCard = () => {
         fetchAvgStats();
     }, []);
 
-    // Configuración ECharts (Gráfica de Barras Verdes)
+    // Configuración ECharts (Dot Chart con línea suave y área)
     const chartOptions = {
-        tooltip: { trigger: 'axis', formatter: '{b}: {c} atletas' },
-        grid: { left: 0, right: 0, top: 20, bottom: 0 },
+        tooltip: { 
+            trigger: 'axis', 
+            formatter: (params) => {
+                const val = params[0].value;
+                return val !== null ? `${params[0].name}: ${val} atletas` : `${params[0].name}: Sin datos`;
+            }
+        },
+        grid: { left: 0, right: 0, top: 10, bottom: 0 },
         xAxis: { 
             type: 'category', 
             show: false, 
+            boundaryGap: false,
             data: data.history.years 
         },
         yAxis: { type: 'value', show: false },
         series: [{
             data: data.history.counts,
-            type: 'bar',
-            barWidth: '60%',
-            itemStyle: {
-                borderRadius: [4, 4, 0, 0],
-                color: '#10b981' // Verde esmeralda
+            type: 'line',
+            smooth: true,
+            showSymbol: true,
+            symbolSize: 7,
+            lineStyle: { width: 2, color: '#10b981' },
+            itemStyle: { 
+                color: '#10b981',
+                borderColor: '#10b981',
+                borderWidth: 2
+            },
+            areaStyle: {
+                color: {
+                    type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+                    colorStops: [
+                        { offset: 0, color: 'rgba(16, 185, 129, 0.4)' },
+                        { offset: 1, color: 'rgba(16, 185, 129, 0.05)' }
+                    ]
+                }
             }
         }]
     };

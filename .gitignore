@@ -1,8 +1,15 @@
 node_modules/
 .env
+.env.prod
+.env.dev
+
 *.psd
 *.png 
 .venv/
+venv/
 /data
 __pycache__/
 .agents
+backup/
+old
+venv/

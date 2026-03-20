@@ -190,15 +190,15 @@ body {
 
 /* ===== DARK THEME VARIABLES ===== */
 [data-theme='dark'] {
-  --sidebar-bg-color: #1e293b;
-  --sidebar-active-color: #334155;
+  --sidebar-bg-color: #0a0f1a;    /* Deepest dark - Sidebar */
+  --sidebar-active-color: #1a2332;
 
-  /* Dark Backgrounds */
-  --color-bg-primary: #111827;    /* Slate 900 - Main App Background */
-  --color-bg-secondary: #1e293b;  /* Slate 800 - Cards & Containers */
-  --color-bg-tertiary: #334155;   /* Slate 700 - Hover states, softer bg */
-  --color-bg-hover: #334155;
-  --color-bg-sidebar: #020617;    /* Slate 950 - Sidebar */
+  /* Dark Backgrounds - INVERTED: content lighter than sidebar */
+  --color-bg-primary: #1a2332;    /* Mid-dark - Main App Background */
+  --color-bg-secondary: #243044;  /* Lighter dark - Cards & Containers */
+  --color-bg-tertiary: #2d3b50;   /* Even lighter - Hover states, softer bg */
+  --color-bg-hover: #2d3b50;
+  --color-bg-sidebar: #060a12;    /* Deepest - Sidebar bg */
 
   /* Light Text for dark backgrounds */
   --color-text-primary: #ffffff;   /* Pure White - Main text */
@@ -206,8 +206,8 @@ body {
   --color-text-tertiary: #cbd5e1;  /* Slate 300 - Muted text */
 
   /* Darker Borders */
-  --color-border: #334155;        /* Slate 700 - Standard border */
-  --color-border-light: #475569;  /* Slate 600 - Lighter border */
+  --color-border: #2d3b50;        /* Matching tertiary - Standard border */
+  --color-border-light: #3a4a60;  /* Lighter border */
 
   /* Shadows for Dark Mode: more subtle and using a dark slate/black base */
   --shadow-card: 4px 4px 0px 0px rgba(0, 0, 0, 0.5);

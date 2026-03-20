@@ -1,6 +1,6 @@
 /* Highlight Card Styling */
 .highlight-card {
-  background-color: #111827; /* Dark base */
+  background-color: #111827; /* Dark base (light theme) */
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
   box-shadow: 4px 4px 0px 0px #fbbf24; /* Solid gold geometric shadow */
@@ -12,6 +12,11 @@
   overflow: hidden; /* Fixes background bleeding out of corners */
   transition: all var(--transition-fast);
   position: relative;
+}
+
+/* Dark theme: use the lighter card bg from the new palette */
+[data-theme='dark'] .highlight-card {
+  background-color: var(--color-bg-secondary);
 }
 
 .highlight-card:hover {
@@ -34,6 +39,10 @@
   background: linear-gradient(to right, #111827 0%, #111827 40%, rgba(17, 24, 39, 0.6) 65%, transparent 100%);
   z-index: 2;
   pointer-events: none;
+}
+
+[data-theme='dark'] .highlight-card::before {
+  background: linear-gradient(to right, var(--color-bg-secondary) 0%, var(--color-bg-secondary) 40%, rgba(36, 48, 68, 0.6) 65%, transparent 100%);
 }
 
 .highlight-card-header {
@@ -139,6 +148,10 @@
   top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(to right, #111827 0%, rgba(17,24,39,0.3) 60%, transparent 100%);
   z-index: 2;
+}
+
+[data-theme='dark'] .highlight-card-image-container::before {
+  background: linear-gradient(to right, var(--color-bg-secondary) 0%, rgba(36,48,68,0.3) 60%, transparent 100%);
 }
 
 .highlight-card-image {

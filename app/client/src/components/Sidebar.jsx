@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Trophy, Users, Dumbbell, Settings, Menu, HelpCircle, PanelLeftClose, Medal, Calendar } from 'lucide-react';
+import { Home, Settings, Menu, HelpCircle, PanelLeftClose, Medal, Calendar, User, Shield, TrendingUp, PieChart, RefreshCw, Scale, Monitor } from 'lucide-react';
 import logo from '../assets/RackAIv2.avif';
 import '../styles/Sidebar.css';
 
@@ -15,10 +15,23 @@ const Sidebar = () => {
   const datosItems = [
     { name: 'Competiciones', path: '/competiciones', icon: Calendar },
     { name: 'Rankings', path: '/rankings', icon: Medal },
-    { name: 'Atletas', path: '/atletas', icon: Dumbbell },
-    { name: 'Clubes', path: '/clubes', icon: Users },
+    { name: 'Atletas', path: '/atletas', icon: User },
+    { name: 'Clubes', path: '/clubes', icon: Shield },
   ];
 
+  const herramientasItems = [
+    { name: 'Comparador', path: '/comparador', icon: Scale },
+  ];
+
+  const analisisItems = [
+    { name: 'Evolución', path: '/evolucion', icon: TrendingUp },
+    { name: 'Mercado', path: '/mercado', icon: PieChart },
+    { name: 'Retención', path: '/retencion', icon: RefreshCw },
+  ];
+
+  const sistemaItems = [
+    { name: 'Plataforma', path: '/plataforma', icon: Monitor },
+  ];
 
   const generalItems = [
     { name: 'Ajustes', path: '/ajustes', icon: Settings },
@@ -81,11 +94,19 @@ const Sidebar = () => {
       </div>
       
       <nav className="sidebar-nav">
-        <div className="sidebar-nav-group-label">DASHBOARD</div>
         {renderNavItems(dashboardItems)}
         
         <div className="sidebar-nav-group-label">DATOS</div>
         {renderNavItems(datosItems)}
+
+        <div className="sidebar-nav-group-label">ANÁLISIS</div>
+        {renderNavItems(analisisItems)}
+
+        <div className="sidebar-nav-group-label">HERRAMIENTAS</div>
+        {renderNavItems(herramientasItems)}
+
+        <div className="sidebar-nav-group-label">SISTEMA</div>
+        {renderNavItems(sistemaItems)}
 
         <div className="sidebar-nav-group-label">GENERAL</div>
         {renderNavItems(generalItems)}

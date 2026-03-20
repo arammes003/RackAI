@@ -1,0 +1,61 @@
+.upcoming-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--spacing-md);
+}
+
+.upcoming-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.upcoming-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  transition: all var(--transition-normal);
+  border-left: 3px solid var(--color-info);
+}
+
+.upcoming-card:hover {
+  border-color: var(--color-info);
+  box-shadow: var(--shadow-md);
+}
+
+.upcoming-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+}
+
+.upcoming-day {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-info);
+}
+
+.upcoming-month {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.1em;
+}
+
+.upcoming-info { flex: 1; }
+.upcoming-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
+.upcoming-info p { font-size: 0.78rem; color: var(--color-text-tertiary); }

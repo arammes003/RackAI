@@ -1,0 +1,116 @@
+.data-table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-tertiary);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--transition-fast);
+}
+
+.data-table th:first-child {
+  border-radius: var(--radius-md) 0 0 0;
+}
+
+.data-table th:last-child {
+  border-radius: 0 var(--radius-md) 0 0;
+}
+
+.data-table th:hover {
+  color: var(--color-text-primary);
+}
+
+.data-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.data-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-text-primary);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table .cell-name {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.data-table .cell-highlight {
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.95rem;
+}
+
+.data-table .cell-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.cell-badge.male {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.cell-badge.female {
+  background: rgba(236, 72, 153, 0.15);
+  color: #ec4899;
+}
+
+.cell-badge.success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.cell-badge.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.cell-badge.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.cell-badge.upcoming {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.data-table .cell-rank {
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text-tertiary);
+  width: 40px;
+}
+
+.data-table .cell-rank.gold { color: #fbbf24; }
+.data-table .cell-rank.silver { color: #94a3b8; }
+.data-table .cell-rank.bronze { color: #d97706; }

@@ -1,14 +1,34 @@
-/* Stat Card Styling */
+/* =============================================
+   Stat Card Styling — Premium Dashboard KPI Card
+   ============================================= */
+
 .stat-card {
+  --icon-color: #60a5fa;
   background-color: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-card);
   transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Accent glow bar on the left */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: 12%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--icon-color);
+  opacity: 0.6;
+  transition: opacity var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .stat-card:hover {
@@ -17,20 +37,57 @@
   border-color: var(--color-border-light);
 }
 
+.stat-card:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--icon-color) 50%, transparent);
+}
+
+/* ---- Header: Icon left + Title ---- */
 .stat-card-header {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .stat-card-title {
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text-tertiary);
+  line-height: 1.2;
 }
 
+/* ---- Icon Box ---- */
+.stat-card-icon-box {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--icon-color) 10%, rgba(15, 23, 42, 0.7));
+  border: 1px solid color-mix(in srgb, var(--icon-color) 18%, transparent);
+  box-shadow: inset 0 0 10px 2px color-mix(in srgb, var(--icon-color) 10%, transparent);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover .stat-card-icon-box {
+  background: color-mix(in srgb, var(--icon-color) 15%, rgba(15, 23, 42, 0.8));
+  box-shadow:
+    inset 0 0 10px 2px color-mix(in srgb, var(--icon-color) 12%, transparent),
+    0 0 12px -2px color-mix(in srgb, var(--icon-color) 25%, transparent);
+}
+
+.stat-card-icon {
+  color: var(--icon-color);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--icon-color) 35%, transparent));
+}
+
+/* ---- Content: Value + Chart ---- */
 .stat-card-content {
   display: flex;
   justify-content: space-between;
@@ -56,42 +113,50 @@
   font-family: "Oswald", sans-serif;
   font-size: 3.5rem;
   font-weight: 700;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   color: var(--color-text-primary);
-  line-height: 1;
+  line-height: 1.2;
 }
 
+/* ---- Trend Badges (dark-theme optimized) ---- */
 .stat-card-trend {
   font-family: "Oswald", sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.45rem;
   border-radius: var(--radius-sm);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
 
 .stat-card-trend.positive {
-  background-color: #cffafe; /* Cyan 100 */
-  color: #0891b2; /* Cyan 600 */
+  background-color: rgba(34, 211, 238, 0.15);
+  color: #22d3ee;
+  border: 1px solid rgba(34, 211, 238, 0.2);
 }
 
 .stat-card-trend.positive-green {
-  background-color: #d1fae5; /* Emerald 100 */
-  color: #059669; /* Emerald 600 */
+  background-color: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.2);
 }
 
 .stat-card-trend.negative {
-  background-color: #fee2e2; /* Red 100 */
-  color: #dc2626; /* Red 600 */
+  background-color: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
 }
 
+/* ---- Subtitle ---- */
 .stat-card-subtitle {
   font-size: 0.75rem;
   color: var(--color-text-tertiary);
   font-weight: 700;
-  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
+  margin-top: 0.3rem;
 }
 
+/* ---- Mini Chart ---- */
 .stat-card-chart {
   flex: 1;
   height: 80px;
