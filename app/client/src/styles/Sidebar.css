@@ -128,6 +128,7 @@
 .sidebar-nav-item-active {
   background-color: var(--sidebar-active-color) !important; /* Dark gray background (Tailwind Gray 800) */
   color: #fbbf24 !important; /* Amber/Yellow 400 Text */
+  
 }
 
 .sidebar-nav-item-active::before {
@@ -162,7 +163,7 @@
   white-space: nowrap;
   overflow: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s;
-  font-size: 0.95rem;
+  font-size: 1rem;
   opacity: 1;
 }
 

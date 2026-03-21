@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   color: white;
-  height: 11rem;
+  height: 12rem;
   overflow: hidden; /* Fixes background bleeding out of corners */
   transition: all var(--transition-fast);
   position: relative;
@@ -54,8 +54,8 @@
 .highlight-card-badge {
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  font-size: 1rem;
   font-weight: 700;
   color: #111827;
   background-color: #fbbf24; /* Amber badge */
@@ -70,7 +70,6 @@
   justify-content: flex-start; /* Stack items horizontally */
   align-items: center;
   height: 100%;
-  /* Removed position: relative so absolute child anchors to highlight-card */
 }
 
 .highlight-card-info {
@@ -85,11 +84,11 @@
 
 .highlight-card-stats {
   font-family: "Oswald", sans-serif;
-  font-size: 2.75rem;
   color: white;
-  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
 }
