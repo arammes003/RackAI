@@ -190,12 +190,12 @@ body {
 
 /* ===== DARK THEME VARIABLES ===== */
 [data-theme='dark'] {
-  --sidebar-bg-color: #0a0f1a;    /* Deepest dark - Sidebar */
+  --sidebar-bg-color: #020617;    /* Deepest dark - Sidebar */
   --sidebar-active-color: #1a2332;
 
   /* Dark Backgrounds - INVERTED: content lighter than sidebar */
-  --color-bg-primary: #1a2332;    /* Mid-dark - Main App Background */
-  --color-bg-secondary: #243044;  /* Lighter dark - Cards & Containers */
+  --color-bg-primary: #0f172a;    /* Mid-dark - Main App Background */
+  --color-bg-secondary: #1e293b;  /* Lighter dark - Cards & Containers */
   --color-bg-tertiary: #2d3b50;   /* Even lighter - Hover states, softer bg */
   --color-bg-hover: #2d3b50;
   --color-bg-sidebar: #060a12;    /* Deepest - Sidebar bg */
